@@ -14,12 +14,9 @@ INCDIRS += -I$(SDKSTAGE)/opt/vc/include/ -I$(SDKSTAGE)/opt/vc/include/interface/
 
 TARGET = piGL.out
 SOURCES = $(shell echo src/*.c) $(shell echo lib/*.c)
-COMMON = 
+COMMON = #Usefull if I make a common head or something
 HEADERS = $(shell echo include/*.h)
 OBJECTS = $(SOURCES:.c=.o)
-
-#PREFIX = $(DESTDIR)/usr/local
-#BINDIR = $(PREFIX)/bin
 
 all: $(TARGET)
 
@@ -36,6 +33,28 @@ clean:
 	-rm -f $(OBJECTS)
 	-rm -f gmon.out #From profiling
 
+distclean: clean
+	-rm -f $(TARGET)
+
+#If not using GNU make or to be safe
+%.o: %.c $(HEADERS) $(COMMON)
+	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -c -o $@ $< $(INCDIRS)
+
+.PHONY : all profile release clean distclean \
+	install install-strip uninstall
+
+
+
+
+
+
+
+
+#Not using this yet
+
+#PREFIX = $(DESTDIR)/usr/local
+#BINDIR = $(PREFIX)/bin
+
 #install: release
 #	install -D $(TARGET) $(BINDIR)/$(TARGET)
 #
@@ -45,13 +64,6 @@ clean:
 #uninstall:
 #	-rm $(BINDIR)/$(TARGET)
 
-distclean: clean
-	-rm -f $(TARGET)
-
-#If not using GNU make
-%.o: %.c $(HEADERS) $(COMMON)
-	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -c -o $@ $< $(INCDIRS)
-
 #Doesn't work!!!
 #Special GNU Make, check header files that matter
 #.SECONDEXPANSION:
@@ -60,5 +72,3 @@ distclean: clean
 #%.o: %.c $$($$@_DEPS)
 #	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -c -o $@ $< $(INCDIRS)
 
-.PHONY : all profile release clean distclean \
-	install install-strip uninstall
