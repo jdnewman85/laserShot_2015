@@ -18,11 +18,11 @@ COMMON = #Usefull if I make a common head or something
 HEADERS = $(shell echo include/*.h)
 OBJECTS = $(SOURCES:.c=.o)
 TESTBENCH = $(shell echo testbench/*.c)
+LIBTARGET = lib$(TARGET).a
 
 GO_C = go
 GO_CFLAGS =
 GO_LDFLAGS = -linkmode external -extldflags -static
-GO_LIBTARGET = lib$(TARGET).a
 GO_TARGET = piGL
 GO_SOURCES = $(shell echo src/*.go)
 
@@ -34,8 +34,10 @@ $(TARGET): $(OBJECTS) $(COMMON)
 release: $(SOURCES) $(HEADERS) $(COMMON)
 	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES) $(TESTBENCH) $(LDFLAGS) $(LIBS) $(INCDIRS)
 
-static: $(OBJECTS) $(COMMON)
-	ar -rcs $(GO_LIBTARGET) $(OBJECTS)
+static: $(OBJECTS)
+	ar -rcs $(LIBTARGET) $(OBJECTS)
+
+go-static: $(GO_SOURCES) static
 	$(GO_C) build -o $(GO_TARGET) -ldflags "$(GO_LDFLAGS)" $(GO_SOURCES)
 
 profile: CFLAGS += -pg
@@ -47,7 +49,7 @@ clean:
 
 distclean: clean
 	-rm -f $(TARGET)
-	-rm -f $(GO_LIBTARGET)
+	-rm -f $(LIBTARGET)
 
 #If not using GNU make or to be safe
 %.o: %.c $(HEADERS) $(COMMON)
