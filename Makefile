@@ -24,14 +24,14 @@ $(TARGET): $(OBJECTS) $(COMMON)
 	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(LIBS)
 
 release: $(SOURCES) $(HEADERS) $(COMMON)
-	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS) $(LIBS)
+	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS) $(LIBS) $(INCDIRS)
 
 profile: CFLAGS += -pg
 profile: $(TARGET)
 
 clean:
 	-rm -f $(OBJECTS)
-	-rm -f gmon.out #From profiling
+	-rm -f gmon.out
 
 distclean: clean
 	-rm -f $(TARGET)
