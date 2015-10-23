@@ -1,19 +1,64 @@
 
+#SDKSTAGE needs to be added around more to make cross compile work
+SHELL = /bin/sh
 CC = gcc
-CFLAGS = -Wall -fgnu89-inline -g
-#CFLAGS+=-DSTANDALONE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -DTARGET_POSIX -D_LINUX -fPIC -DPIC -D_REENTRANT -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -U_FORTIFY_SOURCE -Wall -g -DHAVE_LIBOPENMAX=2 -DOMX -DOMX_SKIP64BIT -ftree-vectorize -pipe -DUSE_EXTERNAL_OMX -DHAVE_LIBBCM_HOST -DUSE_EXTERNAL_LIBBCM_HOST -DUSE_VCHIQ_ARM -Wno-psabi -fgnu89-inline -Wall
-LDFLAGS += -L$(SDKSTAGE)/opt/vc/lib/ -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lm -L../libs/ilclient -L../libs/vgfont
 
-INCLUDES += -I$(SDKSTAGE)/opt/vc/include/ -I$(SDKSTAGE)/opt/vc/include/interface/vcos/pthreads -I$(SDKSTAGE)/opt/vc/include/interface/vmcs_host/linux -I./ -I../libs/ilclient -I../libs/vgfont
+FLAGS = -fgnu89-inline #-std=gnu99 
+CFLAGS = -Wall -Wextra
+DEBUGFLAGS = -O0 -D _DEBUG -ggdb3
+RELEASEFLAGS = -O2 -D NDEBUG #-combine -fwhole-program
+LDFLAGS += -L$(SDKSTAGE)/opt/vc/lib/
+LIBS += -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lm 
 
-SRC = $(wildcard '*.c') #BUG WTF DOESN'T THIS WORK?
-SRC = piGL.c openglMisc.c lib/lodepng.c
+INCDIRS += -I$(SDKSTAGE)/opt/vc/include/ -I$(SDKSTAGE)/opt/vc/include/interface/vcos/pthreads -I$(SDKSTAGE)/opt/vc/include/interface/vmcs_host/linux -I./include
 
-BIN = a.out
+TARGET = piGL.out
+SOURCES = $(shell echo src/*.c) $(shell echo lib/*.c)
+COMMON = 
+HEADERS = $(shell echo include/*.h)
+OBJECTS = $(SOURCES:.c=.o)
 
-all: $(SRC)
-	$(CC) -o $(BIN) $^ $(CFLAGS) $(INCLUDES) $(LDFLAGS)
+#PREFIX = $(DESTDIR)/usr/local
+#BINDIR = $(PREFIX)/bin
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS) $(COMMON)
+	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(LIBS)
+
+release: $(SOURCES) $(HEADERS) $(COMMON)
+	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS) $(LIBS)
+
+profile: CFLAGS += -pg
+profile: $(TARGET)
 
 clean:
-	rm *.o $(BIN)
+	-rm -f $(OBJECTS)
+	-rm -f gmon.out #From profiling
 
+#install: release
+#	install -D $(TARGET) $(BINDIR)/$(TARGET)
+#
+#install-strip: release
+#	install -D -s $(TARGET) $(BINDIR)/$(TARGET)
+#
+#uninstall:
+#	-rm $(BINDIR)/$(TARGET)
+
+distclean: clean
+	-rm -f $(TARGET)
+
+#If not using GNU make
+%.o: %.c $(HEADERS) $(COMMON)
+	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -c -o $@ $< $(INCDIRS)
+
+#Doesn't work!!!
+#Special GNU Make, check header files that matter
+#.SECONDEXPANSION:
+#
+#$(foreach OBJ,$(OBJECTS),$(eval $(OBJ)_DEPS = $(shell gcc -MM $(OBJ:.o=.c) | sed s/.*://)))
+#%.o: %.c $$($$@_DEPS)
+#	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -c -o $@ $< $(INCDIRS)
+
+.PHONY : all profile release clean distclean \
+	install install-strip uninstall

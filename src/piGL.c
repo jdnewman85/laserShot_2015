@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "bcm_host.h"
-#include "openglMisc.h"
+#include <bcm_host.h>
+#include "../include/openglMisc.h"
 
 static StateGL_t _state, *state=&_state;
 

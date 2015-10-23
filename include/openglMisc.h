@@ -1,8 +1,8 @@
 #ifndef __OPENGLMISC_H__
 #define __OPENGLMISC_H__
 
-#include "EGL/egl.h"
-#include "GLES2/gl2.h"
+#include <EGL/egl.h>
+#include <GLES2/gl2.h>
 
 #define GLES_VERSION 2
 

@@ -1,17 +1,14 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "bcm_host.h"
+#include <bcm_host.h>
 
-#include "EGL/egl.h"
-#include "EGL/eglext.h"
-#include "GLES2/gl2.h"
+#include <EGL/egl.h>
+#include <EGL/eglext.h>
+#include <GLES2/gl2.h>
 
-#include "lib/lodepng.h"
-#include "openglMisc.h"
-
-
-
+#include "../lib/lodepng.h"
+#include "../include/openglMisc.h"
 
 
 //Simple Opengl stuffs

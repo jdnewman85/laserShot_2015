@@ -1,4 +1,4 @@
-Notes:
+reating a shared and static library with the gnu compiler [gcc]
 	OPENGL ES2.0
 	No VAOs
 Includes:
@@ -58,6 +58,10 @@ Setup our shaders and objects
 		glTexParameteri (multiple)
 		glTexImage2D
 		glGenerateMipmap?
+	See Per Frame
+		Uniform setups
+
+Now we can start doing shit!
 	Per Frame
 		Per FrameBuffer
 			glBindFramebuffer
