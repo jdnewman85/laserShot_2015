@@ -1,3 +1,6 @@
+Notes:
+	OPENGL ES2.0
+	No VAOs
 Includes:
 	bcm_host.h
 	GLES2/gl2.h (or gl.h for fixed)
@@ -68,11 +71,13 @@ Setup our shaders and objects
 					glUseProgram
 					Per Uniform
 						glUniform
-					Per Texture group
-						glActiveTexture (multiple per texture slot)
-						glBindTexture
-						Per SubBatch
-							glDrawArrays
+					Per Texture set
+						Per Texture
+							glActiveTexture (slot matching uniform?)
+							glBindTexture
+							glUniform (slot)
+							Per SubBatch
+								glDrawArrays
 					glBindTexture 0? //Protection?
 					glUseProgram 0? //Protection?
 			glFLush?
