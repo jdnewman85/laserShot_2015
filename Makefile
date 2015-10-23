@@ -12,12 +12,19 @@ LIBS += -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt 
 
 INCDIRS += -I$(SDKSTAGE)/opt/vc/include/ -I$(SDKSTAGE)/opt/vc/include/interface/vcos/pthreads -I$(SDKSTAGE)/opt/vc/include/interface/vmcs_host/linux -I./include
 
-TARGET = piGL.out
+TARGET = piGL
 SOURCES = $(shell echo src/*.c) $(shell echo lib/*.c)
 COMMON = #Usefull if I make a common head or something
 HEADERS = $(shell echo include/*.h)
 OBJECTS = $(SOURCES:.c=.o)
 TESTBENCH = $(shell echo testbench/*.c)
+
+GO_C = go
+GO_CFLAGS =
+GO_LDFLAGS = -linkmode external -extldflags -static
+GO_LIBTARGET = lib$(TARGET).a
+GO_TARGET = piGL
+GO_SOURCES = $(shell echo src/*.go)
 
 all: $(TARGET)
 
@@ -26,6 +33,10 @@ $(TARGET): $(OBJECTS) $(COMMON)
 
 release: $(SOURCES) $(HEADERS) $(COMMON)
 	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES) $(TESTBENCH) $(LDFLAGS) $(LIBS) $(INCDIRS)
+
+static: $(OBJECTS) $(COMMON)
+	ar -rcs $(GO_LIBTARGET) $(OBJECTS)
+	$(GO_C) build -o $(GO_TARGET) -ldflags "$(GO_LDFLAGS)" $(GO_SOURCES)
 
 profile: CFLAGS += -pg
 profile: $(TARGET)
@@ -36,6 +47,7 @@ clean:
 
 distclean: clean
 	-rm -f $(TARGET)
+	-rm -f $(GO_LIBTARGET)
 
 #If not using GNU make or to be safe
 %.o: %.c $(HEADERS) $(COMMON)
