@@ -1,0 +1,80 @@
+Includes:
+	bcm_host.h
+	GLES2/gl2.h (or gl.h for fixed)
+	EGL/egl.h
+	EGL/elgext.h
+
+OpenGL Init
+	bcm_host_init
+	eglGetDisplay
+	eglInitialize
+	eglChooseConfig
+	eglBindAPI
+	eglCreateContext
+	graphics_get_display_size
+	vc_dispmanx_display_open
+	vc_dispmanx_update_start
+	vc_dispmanx_element_add
+	vc_dispmanx_update_submit_sync
+	eglCreateWindowSurface //NOTE nativewindow must be static!
+	eglMakeCurrent //Note May need to call if focus is lost?
+
+	
+At this point, should have working opengl
+Now, init our opengl state
+	glBindFramebuffer 0
+	glViewport
+	glClearColor
+	glClear
+	eglSwapBuffers
+
+Setup our shaders and objects
+	Per Program
+		Per Shader
+			Load file
+			glCreateShader
+			glShaderSource
+			glCompileShader
+			showShaderLogGL
+			glAttachShader
+			Per Buffer/VBO
+				glGenBuffers
+				glBindBuffer
+				glBufferData
+				Per Atttribute
+					glBindAttribLocation/glGetAttribLocation/layout(glsl)
+					glEnableVertexAttribArray
+					glVertexAttribPointer
+		glLinkProgram
+		isLinked?
+		showProgramLogGL
+	Per Texture
+		Load File
+		glGenTextures
+		glBindTexture
+		glTexParameteri (multiple)
+		glTexImage2D
+		glGenerateMipmap?
+	Per Frame
+		Per FrameBuffer
+			glBindFramebuffer
+			glClear?
+			Per Batch
+				Per Shader
+					Per AttributeBuffer
+						glBindBuffer
+						glBufferData
+					glBindBuffer 0 //Protection
+					glUseProgram
+					Per Uniform
+						glUniform
+					Per Texture group
+						glActiveTexture (multiple per texture slot)
+						glBindTexture
+						Per SubBatch
+							glDrawArrays
+					glBindTexture 0? //Protection?
+					glUseProgram 0? //Protection?
+			glFLush?
+			glFinish?
+			eglSwapBuffers
