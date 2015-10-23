@@ -17,14 +17,15 @@ SOURCES = $(shell echo src/*.c) $(shell echo lib/*.c)
 COMMON = #Usefull if I make a common head or something
 HEADERS = $(shell echo include/*.h)
 OBJECTS = $(SOURCES:.c=.o)
+TESTBENCH = $(shell echo testbench/*.c)
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(COMMON)
-	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(LIBS)
+	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -o $(TARGET) $(OBJECTS) $(TESTBENCH) $(LDFLAGS) $(LIBS) $(INCDIRS)
 
 release: $(SOURCES) $(HEADERS) $(COMMON)
-	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS) $(LIBS) $(INCDIRS)
+	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES) $(TESTBENCH) $(LDFLAGS) $(LIBS) $(INCDIRS)
 
 profile: CFLAGS += -pg
 profile: $(TARGET)
