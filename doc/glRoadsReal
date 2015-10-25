@@ -45,6 +45,7 @@ Setup our shaders and objects
 				glBindBuffer
 				glBufferData
 				Per Atttribute
+					//INSERT VAO SETUP HERE
 					glBindAttribLocation/glGetAttribLocation/layout(glsl)
 					glEnableVertexAttribArray
 					glVertexAttribPointer
@@ -68,6 +69,7 @@ Now we can start doing shit!
 			glClear?
 			Per Batch
 				Per Shader
+					//CALL VAO BIND HERE
 					Per AttributeBuffer
 						glBindBuffer
 						glBufferData
