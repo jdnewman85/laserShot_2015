@@ -110,7 +110,7 @@ void AR_Graphics(StateGL_t *state) {
 	result = eglMakeCurrent(state->display, state->surface, state->surface, context);
 	assert(EGL_FALSE != result);
 	AR_CheckGL();
-	
+
 	// Set background color and clear buffers
 	glClearColor(0.00f, 0.00f, 0.95f, 1.0f); //OPT Remove?
 	glClear(GL_COLOR_BUFFER_BIT);

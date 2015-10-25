@@ -1,5 +1,5 @@
-#ifndef __MISC_H__
-#define __MISC_H__
+#ifndef __AR_MISC_H__
+#define __AR_MISC_H__
 
 #include <assert.h>
 
@@ -27,4 +27,5 @@ typedef struct {
 void AR_PrintShaderLog(GLint shader);
 void AR_PrintProgramLog(GLint shader);
 
-#endif //__MISC_H__
+#endif //__AR_MISC_H__
+

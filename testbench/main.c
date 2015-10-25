@@ -24,16 +24,7 @@ int main(int argNum, char** args) {
 	printf("Images, bitches\n");
 
 	//TEMP TEXTURE SHIT
-	GLint texLoc;
-	texLoc = glGetUniformLocation(state->program, "Texture");
-	AR_CheckGL();
-	//assert(texLoc >= 0);
-
-	glActiveTexture(GL_TEXTURE0); //OPT NEEDED?
-	AR_CheckGL();
 	glBindTexture(GL_TEXTURE_2D, myTexture->textureId);
-	AR_CheckGL();
-	glUniform1i(texLoc, 0);
 	AR_CheckGL();
 
 	for(;;) {
@@ -46,3 +37,4 @@ int main(int argNum, char** args) {
 
 	return 0;
 }
+

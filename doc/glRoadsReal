@@ -70,9 +70,17 @@ Now we can start doing shit!
 			Per Batch
 				Per Shader
 					//CALL VAO BIND HERE
-					Per AttributeBuffer
+					Per Buffer
 						glBindBuffer
-						glBufferData
+						//glBufferData
+						Per Attribute
+							if used
+								glBindBuffer
+								glEnableVertexAttribArray
+								glVertexAttribPointer
+							else
+								glDisableVertexAttribArray
+							
 					glBindBuffer 0 //Protection
 					glUseProgram
 					Per Uniform

@@ -1,5 +1,5 @@
-#ifndef __TEXTURE_H__
-#define __TEXTURE_H__
+#ifndef __AR_TEXTURE_H__
+#define __AR_TEXTURE_H__
 
 typedef struct {
 	 //OPT 16bit width and height?
@@ -11,4 +11,5 @@ typedef struct {
 AR_Texture* AR_LoadTexture(char* filename);
 void AR_Texture_Destroy(AR_Texture* texture);
 
-#endif //__TEXTURE_H__
+#endif //__AR_TEXTURE_H__
+

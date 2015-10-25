@@ -6,5 +6,7 @@
 #include "AR_Texture.h"
 #include "AR_Misc.h"
 #include "AR_Debug.h"
+#include "AR_Vao.h"
 
 #endif //__ARGON_H__
+

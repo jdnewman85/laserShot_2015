@@ -106,6 +106,14 @@ void AR_DebugInit(StateGL_t *state) {
 	glUseProgram(program);
 	AR_CheckGL();
 
+	//TODO OPT
+	//For now, we're just going to use 1 sampler/texture unit
+	GLint texLoc;
+	texLoc = glGetUniformLocation(program, "Texture");
+	glActiveTexture(GL_TEXTURE0);
+	glUniform1i(texLoc, 0);
+	AR_CheckGL();
+	
 	//Save state OPT BUG TODO
 	state->program = program;
 	state->vertexBuffer = vertexBuffer;

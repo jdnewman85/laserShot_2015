@@ -1,5 +1,5 @@
-#ifndef __IMAGE_H__
-#define __IMAGE_H__
+#ifndef __AR_IMAGE_H__
+#define __AR_IMAGE_H__
 
 #include <stdint.h>
 
@@ -13,4 +13,5 @@ typedef struct {
 AR_Image* AR_LoadImage(char* filename);
 void AR_Image_Destroy(AR_Image* image);
 
-#endif //__IMAGE_H__
+#endif //__AR_IMAGE_H__
+
