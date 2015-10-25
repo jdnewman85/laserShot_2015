@@ -26,6 +26,7 @@ typedef struct {
 
 void AR_PrintShaderLog(GLint shader);
 void AR_PrintProgramLog(GLint shader);
+char* AR_LoadStringFromFile(char* filename);
 
 #endif //__AR_MISC_H__
 

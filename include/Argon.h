@@ -7,6 +7,7 @@
 #include "AR_Misc.h"
 #include "AR_Debug.h"
 #include "AR_Vao.h"
+#include "AR_Sprite.h"
 
 #endif //__ARGON_H__
 

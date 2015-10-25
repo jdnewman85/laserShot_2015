@@ -17,6 +17,9 @@ int main(int argNum, char** args) {
 	AR_Graphics(state);
 	AR_DebugInit(state);
 
+	//Test Load of Sprite stuffs
+//	AR_SpriteInit();
+
 	//Test load a png
 	AR_Texture* myTexture;
 	myTexture = AR_LoadTexture("./img/test.png");

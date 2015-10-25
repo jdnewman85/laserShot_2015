@@ -116,6 +116,14 @@ void AR_Graphics(StateGL_t *state) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	AR_CheckGL();
 
+	// Prepare viewport
+	glViewport (0, 0, state->screen_width, state->screen_height);
+	AR_CheckGL();
+
+	// Framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	AR_CheckGL();
+
 	state->context = context; //OPT REmove state->context?
 }
 

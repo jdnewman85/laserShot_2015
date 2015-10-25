@@ -7,8 +7,8 @@
 
 typedef struct {
 	bool enabled;
-	int index;
 	GLuint bufferId;
+	GLuint index;
 	GLint size;
 	GLenum type;
 	GLboolean normalized;
@@ -22,6 +22,8 @@ typedef struct {
 
 
 AR_Vao* AR_CreateVao();
+void AR_Vao_SetAttribute(AR_Vao* vao, GLuint index, GLint size, GLenum type,
+		GLboolean normalized, GLsizei stride, GLvoid* pointer);
 void AR_Vao_Bind(AR_Vao* vao);
 
 #endif //__AR_VAO_H__
