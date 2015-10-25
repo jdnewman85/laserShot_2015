@@ -6,8 +6,8 @@
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
-#include "Image.h"
-#include "Texture.h"
+#include "AR_Image.h"
+#include "AR_Texture.h"
 
 typedef struct {
 	uint32_t screen_width;
@@ -22,9 +22,7 @@ typedef struct {
 	GLuint vertexBuffer;
 } StateGL_t;
 
-//Simple Opengl stuffs
-
-#define checkGL() assert(glGetError() == 0);
+#define AR_CheckGL() assert(glGetError() == 0);
 
 void AR_PrintShaderLog(GLint shader);
 void AR_PrintProgramLog(GLint shader);

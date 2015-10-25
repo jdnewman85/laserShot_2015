@@ -2,11 +2,11 @@
 
 #include <GLES2/gl2.h>
 
-#include "../include/Misc.h"
+#include "AR_Misc.h"
 
 
 //Simple Opengl stuffs
-//#define checkGL() = assert(glGetError() == 0)
+//#define AR_CheckGL() = assert(glGetError() == 0)
 
 void AR_PrintShaderLog(GLint shader) {
    // Prints the compile log for a shader

@@ -1,10 +1,10 @@
 #ifndef __ARGON_H__
 #define __ARGON_H__
 
-#include "Graphics.h"
-#include "Image.h"
-#include "Texture.h"
-#include "Misc.h"
-#include "Debug.h"
+#include "AR_Graphics.h"
+#include "AR_Image.h"
+#include "AR_Texture.h"
+#include "AR_Misc.h"
+#include "AR_Debug.h"
 
 #endif //__ARGON_H__

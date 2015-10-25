@@ -1,8 +1,8 @@
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
-#include "Misc.h" //OPT In Debug.h
-#include "Debug.h"
+#include "AR_Misc.h" //OPT In Debug.h
+#include "AR_Debug.h"
 
 void AR_DebugInit(StateGL_t *state) {
 	const GLfloat vertex_data[] = {
@@ -40,7 +40,7 @@ void AR_DebugInit(StateGL_t *state) {
 	vshader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vshader, 1, &vshader_source, 0);
 	glCompileShader(vshader);
-	checkGL();
+	AR_CheckGL();
 
 	AR_PrintShaderLog(vshader);
 
@@ -48,7 +48,7 @@ void AR_DebugInit(StateGL_t *state) {
 	fshader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fshader, 1, &fshader_source, 0);
 	glCompileShader(fshader);
-	checkGL();
+	AR_CheckGL();
 
 	AR_PrintShaderLog(fshader);
 
@@ -62,7 +62,7 @@ void AR_DebugInit(StateGL_t *state) {
 	GLint isLinked;
 	glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
 	assert(isLinked == GL_TRUE);
-	checkGL();
+	AR_CheckGL();
 
 	AR_PrintProgramLog(program);
 	
@@ -70,11 +70,11 @@ void AR_DebugInit(StateGL_t *state) {
 	
 	//OPT BUG TODO NEEDED?
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	checkGL();
+	AR_CheckGL();
 
 	// Prepare viewport
 	glViewport (0, 0, state->screen_width, state->screen_height);
-	checkGL();
+	AR_CheckGL();
 	
 	// Upload vertex data to a buffer
 	// BUG OPT TODO REMOVE OR MOVE
@@ -87,7 +87,7 @@ void AR_DebugInit(StateGL_t *state) {
 	vertexAttribLoc = glGetAttribLocation(program, "vertex");
 	glEnableVertexAttribArray(vertexAttribLoc);
 	glVertexAttribPointer(vertexAttribLoc, 4, GL_FLOAT, GL_FALSE, 0, 0);
-	checkGL();
+	AR_CheckGL();
 
 	//Texture Coord data
 	GLuint texCoordBuffer;
@@ -99,12 +99,12 @@ void AR_DebugInit(StateGL_t *state) {
 	texCoordLoc = glGetAttribLocation(program, "vertTexCoord");
 	glEnableVertexAttribArray(texCoordLoc);
 	glVertexAttribPointer(texCoordLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
-	checkGL();
+	AR_CheckGL();
 
         glBindBuffer(GL_ARRAY_BUFFER, 0); //OPT NEEDED?
 
 	glUseProgram(program);
-	checkGL();
+	AR_CheckGL();
 
 	//Save state OPT BUG TODO
 	state->program = program;
@@ -115,24 +115,24 @@ void AR_DebugDraw(StateGL_t *state) {
         glBindFramebuffer(GL_FRAMEBUFFER, 0); //Certainly probalby not needed every frame OPT
 
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-        checkGL();
+        AR_CheckGL();
         
         glBindBuffer(GL_ARRAY_BUFFER, state->vertexBuffer); //OPT Only needed to call glBufferData to change stuffs...
-        checkGL();
+        AR_CheckGL();
 
         glUseProgram(state->program); //Only needed when switching programs OPT
-        checkGL();
+        AR_CheckGL();
         
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-        checkGL();
+        AR_CheckGL();
 
         glBindBuffer(GL_ARRAY_BUFFER, 0); //Good to catch accidental buffer use, but OPT
 
         glFlush();
         glFinish();
-        checkGL();
+        AR_CheckGL();
         
         eglSwapBuffers(state->display, state->surface);
-        checkGL();
+        AR_CheckGL();
 }
 

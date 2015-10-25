@@ -3,7 +3,7 @@
 #include <stdint.h> //OPT already included/unneeded from stdlib.h
 
 #include "../lib/lodepng.h"
-#include "Image.h"
+#include "AR_Image.h"
 
 AR_Image* AR_LoadImage(char* filename) {
 	uint32_t error;

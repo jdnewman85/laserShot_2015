@@ -20,21 +20,21 @@ int main(int argNum, char** args) {
 	//Test load a png
 	AR_Texture* myTexture;
 	myTexture = AR_LoadTexture("./img/test.png");
-	checkGL();
+	AR_CheckGL();
 	printf("Images, bitches\n");
 
 	//TEMP TEXTURE SHIT
 	GLint texLoc;
 	texLoc = glGetUniformLocation(state->program, "Texture");
-	checkGL();
+	AR_CheckGL();
 	//assert(texLoc >= 0);
 
 	glActiveTexture(GL_TEXTURE0); //OPT NEEDED?
-	checkGL();
+	AR_CheckGL();
 	glBindTexture(GL_TEXTURE_2D, myTexture->textureId);
-	checkGL();
+	AR_CheckGL();
 	glUniform1i(texLoc, 0);
-	checkGL();
+	AR_CheckGL();
 
 	for(;;) {
 		AR_Cls();

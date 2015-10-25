@@ -4,8 +4,8 @@
 
 #include "../lib/lodepng.h"
 
-#include "Image.h"
-#include "Texture.h"
+#include "AR_Image.h"
+#include "AR_Texture.h"
 
 AR_Texture* AR_LoadTexture(char* filename) {
 	AR_Image* tempImage;

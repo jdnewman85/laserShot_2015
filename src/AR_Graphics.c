@@ -6,7 +6,7 @@
 
 #include <bcm_host.h>
 
-#include "Misc.h" //Opt in Graphics.h
+#include "AR_Misc.h" //Opt in Graphics.h
 
 #define GLES_VERSION 2
 
@@ -49,28 +49,28 @@ void AR_Graphics(StateGL_t *state) {
 	//Get EGL Display
 	state->display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	assert(state->display!=EGL_NO_DISPLAY);
-	checkGL();
+	AR_CheckGL();
 	
 	//Init EGL Display
 	result = eglInitialize(state->display, NULL, NULL);
 	assert(EGL_FALSE != result);
-	checkGL();
+	AR_CheckGL();
 	
 	//Choose Config //NOTE: Just chooses first match
 	result = eglChooseConfig(state->display, attribute_list, &config, 1, &num_config);
 	assert(EGL_FALSE != result);
-	checkGL();
+	AR_CheckGL();
 	
 	//Bind API
 	result = eglBindAPI(EGL_OPENGL_ES_API);
 	assert(EGL_FALSE != result);
-	checkGL();
+	AR_CheckGL();
 	
 	//Create Rendering Context
 	EGLContext context;
 	context = eglCreateContext(state->display, config, EGL_NO_CONTEXT, context_attributes);
 	assert(context!=EGL_NO_CONTEXT);
-	checkGL();
+	AR_CheckGL();
 	
 	//Setup Window Surface
 	success = graphics_get_display_size(0 /* LCD */, &state->screen_width, &state->screen_height);
@@ -100,21 +100,21 @@ void AR_Graphics(StateGL_t *state) {
 	nativewindow.height = state->screen_height;
 	vc_dispmanx_update_submit_sync(dispman_update);
 	   
-	checkGL();
+	AR_CheckGL();
 	
 	state->surface = eglCreateWindowSurface(state->display, config, &nativewindow, NULL);
 	assert(state->surface != EGL_NO_SURFACE);
-	checkGL();
+	AR_CheckGL();
 	
 	//Connect context and surface
 	result = eglMakeCurrent(state->display, state->surface, state->surface, context);
 	assert(EGL_FALSE != result);
-	checkGL();
+	AR_CheckGL();
 	
 	// Set background color and clear buffers
 	glClearColor(0.00f, 0.00f, 0.95f, 1.0f); //OPT Remove?
 	glClear(GL_COLOR_BUFFER_BIT);
-	checkGL();
+	AR_CheckGL();
 
 	state->context = context; //OPT REmove state->context?
 }

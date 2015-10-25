@@ -1,7 +1,7 @@
 #ifndef __GRAPHICS_H__
 #define __GRAPHICS_H__
 
-#include "Misc.h"
+#include "AR_Misc.h"
 
 void AR_Graphics(StateGL_t *state);
 void AR_Cls();
