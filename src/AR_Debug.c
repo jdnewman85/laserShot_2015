@@ -77,12 +77,6 @@ void AR_DebugInit(StateGL_t *state) {
 		 1.0,	 1.0,	 1.0,	 1.0,
 		-1.0,	 1.0,	 1.0,	 1.0
    	}; //TODO MOVE
-	const GLfloat vertex_texCoords[] = {
-		  0.0,	  1.0,
-		  1.0,	  1.0,
-		  1.0,	  0.0,
-		  0.0,	  0.0
-	}; //TODO MOVE?
 
 	GLuint program;
 	program = AR_LoadShaderProgram("./shader/sprite");
@@ -98,18 +92,6 @@ void AR_DebugInit(StateGL_t *state) {
 	vertexAttribLoc = glGetAttribLocation(program, "vertex");
 	glEnableVertexAttribArray(vertexAttribLoc);
 	glVertexAttribPointer(vertexAttribLoc, 4, GL_FLOAT, GL_FALSE, 0, 0);
-	AR_CheckGL();
-
-	//Texture Coord data
-	GLuint texCoordBuffer;
-	glGenBuffers(1, &texCoordBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_texCoords), vertex_texCoords, GL_STATIC_DRAW);
-
-	GLuint texCoordLoc;
-	texCoordLoc = glGetAttribLocation(program, "vertTexCoord");
-	glEnableVertexAttribArray(texCoordLoc);
-	glVertexAttribPointer(texCoordLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	AR_CheckGL();
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);

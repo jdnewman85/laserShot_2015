@@ -5,11 +5,10 @@
 //attribute vec4 color;
 
 attribute vec4 vertex;
-attribute vec2 vertTexCoord;
 varying vec2 fragTexCoord;
 
 void main(void) {
-	fragTexCoord = vertTexCoord;
+	fragTexCoord = vec2(clamp(vertex.x, 0.0, 1.0), clamp(vertex.y*-1.0, 0.0, 1.0));
 
 	gl_Position = vertex;
 }
