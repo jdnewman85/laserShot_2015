@@ -21,7 +21,8 @@ TESTBENCH = $(shell echo testbench/*.c)
 LIBTARGET = lib$(TARGET).a
 
 GO_C = go
-GO_CFLAGS =
+CGO_FLAGS = $(FLAGS) $(INCDIRS)
+CGO_LDFLAGS = $(LDFLAGS) $(LIBS)
 GO_LDFLAGS = -linkmode external -extldflags -static
 GO_TARGET = piGL
 GO_SOURCES = $(shell echo src/*.go)
@@ -29,16 +30,16 @@ GO_SOURCES = $(shell echo src/*.go)
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(COMMON)
-	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -o $(TARGET) $(OBJECTS) $(TESTBENCH) $(LDFLAGS) $(LIBS) $(INCDIRS)
+	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -o $(TARGET).out $(OBJECTS) $(TESTBENCH) $(LDFLAGS) $(LIBS) $(INCDIRS)
 
 release: $(SOURCES) $(HEADERS) $(COMMON)
-	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES) $(TESTBENCH) $(LDFLAGS) $(LIBS) $(INCDIRS)
+	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET).out $(SOURCES) $(TESTBENCH) $(LDFLAGS) $(LIBS) $(INCDIRS)
 
 static: $(OBJECTS)
 	ar -rcs $(LIBTARGET) $(OBJECTS)
 
 go-static: $(GO_SOURCES) static
-	$(GO_C) build -o $(GO_TARGET) -ldflags "$(GO_LDFLAGS)" $(GO_SOURCES)
+	CGO_CFLAGS="$(CGO_FLAGS)" CGO_LDFLAGS="$(CGO_LDFLAGS)" $(GO_C) build -o $(GO_TARGET) -ldflags "$(GO_LDFLAGS) $(CGO_LDFLAGS)" $(GO_SOURCES)
 
 profile: CFLAGS += -pg
 profile: $(TARGET)
@@ -48,7 +49,7 @@ clean:
 	-rm -f gmon.out
 
 distclean: clean
-	-rm -f $(TARGET)
+	-rm -f $(TARGET).out
 	-rm -f $(LIBTARGET)
 
 #If not using GNU make or to be safe

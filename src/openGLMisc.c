@@ -8,7 +8,7 @@
 #include <GLES2/gl2.h>
 
 #include "../lib/lodepng.h"
-#include "../include/openglMisc.h"
+#include "../include/openGLMisc.h"
 
 
 //Simple Opengl stuffs

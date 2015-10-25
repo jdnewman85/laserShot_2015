@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include <bcm_host.h>
-#include "../include/openglMisc.h"
+#include "../include/openGLMisc.h"
 
 static StateGL_t _state, *state=&_state;
 
@@ -37,6 +37,7 @@ int main(int argNum, char** args) {
 	checkGL()
 
 	for(;;) {
+		clearGL();
 		drawScreenQuadGL(state);
 	}
        
