@@ -58,14 +58,14 @@ GLuint AR_LoadShaderProgram(char* filename) {
 	glAttachShader(program, vertShader);
 	glAttachShader(program, fragShader);
 	glLinkProgram(program);
+	AR_CheckGL();
 	
 	//Check for proper linking
 	GLint isLinked;
 	glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
+	AR_PrintProgramLog(program);
 	assert(isLinked == GL_TRUE);
 	AR_CheckGL();
-
-	AR_PrintProgramLog(program);
 
 	return program;
 }
