@@ -7,27 +7,6 @@
 #include "AR_Debug.h"
 
 GLuint AR_LoadShaderProgram(char* filename) {
-	//TODO BUG TEMP
-	//Need to actually load from file
-	const GLchar* vertSourceOLD =
-		"attribute vec4 vertex;"
-		"attribute vec2 vertTexCoord;"
-		"varying vec2 fragTexCoord;"
-		""
-		"void main(void) {"
-		"	fragTexCoord = vertTexCoord;"
-		""
-		"	gl_Position = vertex;"
-		"}";
-
-	const GLchar* fragSourceOLD =
-		"varying lowp vec2 fragTexCoord;"
-		"uniform sampler2D Texture;"
-		""
-		"void main(void) {"
-		"	gl_FragColor = texture2D(Texture, fragTexCoord);"
-		"}";
-
 	char tempFilename[1024];
 	strcpy(tempFilename, filename);
 	strcat(tempFilename, ".vert");
@@ -79,7 +58,7 @@ void AR_DebugInit(StateGL_t *state) {
    	}; //TODO MOVE
 
 	GLuint program;
-	program = AR_LoadShaderProgram("./shader/sprite");
+	program = AR_LoadShaderProgram("./shader/SimpleSprite");
 	
 	// Upload vertex data to a buffer
 	// BUG OPT TODO REMOVE OR MOVE
@@ -89,7 +68,7 @@ void AR_DebugInit(StateGL_t *state) {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data), vertex_data, GL_STATIC_DRAW);
 
 	GLuint vertexAttribLoc;
-	vertexAttribLoc = glGetAttribLocation(program, "vertex");
+	vertexAttribLoc = glGetAttribLocation(program, "position");
 	glEnableVertexAttribArray(vertexAttribLoc);
 	glVertexAttribPointer(vertexAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	AR_CheckGL();
