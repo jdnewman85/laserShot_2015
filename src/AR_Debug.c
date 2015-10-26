@@ -72,10 +72,10 @@ GLuint AR_LoadShaderProgram(char* filename) {
 
 void AR_DebugInit(StateGL_t *state) {
 	const GLfloat vertex_data[] = {
-		-1.0,	-1.0,	 1.0,	 1.0,
-		 1.0,	-1.0,	 1.0,	 1.0,
-		 1.0,	 1.0,	 1.0,	 1.0,
-		-1.0,	 1.0,	 1.0,	 1.0
+		-1.0,	-1.0,
+		 1.0,	-1.0,
+		 1.0,	 1.0,
+		-1.0,	 1.0
    	}; //TODO MOVE
 
 	GLuint program;
@@ -91,7 +91,7 @@ void AR_DebugInit(StateGL_t *state) {
 	GLuint vertexAttribLoc;
 	vertexAttribLoc = glGetAttribLocation(program, "vertex");
 	glEnableVertexAttribArray(vertexAttribLoc);
-	glVertexAttribPointer(vertexAttribLoc, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(vertexAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	AR_CheckGL();
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
