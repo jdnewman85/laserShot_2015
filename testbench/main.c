@@ -18,7 +18,7 @@ int main(int argNum, char** args) {
 	AR_DebugInit(state);
 
 	//Test Load of Sprite stuffs
-	AR_PointSpriteInit();
+	AR_SimpleSpriteInit();
 
 	//Test load a png
 	AR_Texture* myTexture;
@@ -31,8 +31,8 @@ int main(int argNum, char** args) {
 	AR_CheckGL();
 
 	//Make Some Sprites
-	AR_PointSprite* mySprites;
-	mySprites = AR_CreatePointSprites(5);
+	AR_SimpleSprite* mySprites;
+	mySprites = AR_CreateSimpleSprites(5);
 
 	for(int i = 0; i < 5; i++) {
 		mySprites[i].x = 0.2f*i;
@@ -43,7 +43,7 @@ int main(int argNum, char** args) {
 		AR_Cls();
 
 		//AR_DebugDraw(state);
-		AR_PointSprite_Draw(mySprites, 5);
+		AR_SimpleSprite_Draw(mySprites, 5);
 
 
 		glFlush();
