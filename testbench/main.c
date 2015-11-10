@@ -18,7 +18,7 @@ int main(int argNum, char** args) {
 	AR_DebugInit(state);
 
 	//Test Load of Sprite stuffs
-//	AR_SpriteInit();
+	AR_PointSpriteInit();
 
 	//Test load a png
 	AR_Texture* myTexture;
@@ -30,9 +30,25 @@ int main(int argNum, char** args) {
 	glBindTexture(GL_TEXTURE_2D, myTexture->textureId);
 	AR_CheckGL();
 
+	//Make Some Sprites
+	AR_PointSprite* mySprites;
+	mySprites = AR_CreatePointSprites(5);
+
+	for(int i = 0; i < 5; i++) {
+		mySprites[i].x = 0.2f*i;
+		mySprites[i].y = 0.0f;
+	}
+
 	for(;;) {
 		AR_Cls();
-		AR_DebugDraw(state);
+
+		//AR_DebugDraw(state);
+		AR_PointSprite_Draw(mySprites, 5);
+
+
+		glFlush();
+		glFinish();
+		AR_Flip(state);
 	}
        
 
