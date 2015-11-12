@@ -70,6 +70,7 @@ void AR_DebugInit(StateGL_t *state) {
 	GLuint vertexAttribLoc;
 	vertexAttribLoc = glGetAttribLocation(program, "position");
 	glEnableVertexAttribArray(vertexAttribLoc);
+	 //OPT TODO This needs location of data in structure and stride if interleaved
 	glVertexAttribPointer(vertexAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	AR_CheckGL();
 

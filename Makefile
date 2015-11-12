@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra
 DEBUGFLAGS = -O0 -D _DEBUG -ggdb3
 RELEASEFLAGS = -O2 -D NDEBUG #-combine -fwhole-program
 LDFLAGS += -L$(SDKSTAGE)/opt/vc/lib/
-LIBS += -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lm 
+LIBS += -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lm -lkazmath
 
 INCDIRS += -I$(SDKSTAGE)/opt/vc/include/ -I$(SDKSTAGE)/opt/vc/include/interface/vcos/pthreads -I$(SDKSTAGE)/opt/vc/include/interface/vmcs_host/linux -I./include
 

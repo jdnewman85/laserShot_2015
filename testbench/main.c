@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include <GLES2/gl2.h>
+#include <kazmath/kazmath.h>
 
 #include "../include/Argon.h"
 
@@ -16,6 +17,14 @@ int main(int argNum, char** args) {
 
 	AR_Graphics(state);
 	AR_DebugInit(state);
+
+	//kazmath test
+	kmVec3 testVector;
+	kmMat4 testMatrix;
+	kmMat4RotationZ(&testMatrix, kmPI/2.0f);
+	testVector.x = 10.0f;
+	kmVec3Transform(&testVector, &testVector, &testMatrix);
+	printf("testVector: (x%f, y%f, z%f)\n", testVector.x, testVector.y, testVector.z);
 
 	//Test Load of Sprite stuffs
 	AR_SimpleSpriteInit();

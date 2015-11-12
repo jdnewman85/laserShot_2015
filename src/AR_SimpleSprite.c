@@ -49,7 +49,7 @@ void AR_SimpleSprite_Draw(AR_SimpleSprite* simpleSprite, int count) {
 	AR_Vao_Bind(Vao);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(AR_SimpleSprite)*count, simpleSprite, GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, count);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, count*4);
 
 	//OPT Need?, debug only?
 	AR_Vao_Bind(0);
