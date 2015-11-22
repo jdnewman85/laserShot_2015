@@ -16,13 +16,15 @@ int main(int argNum, char** args) {
 	printf("initGL\n");
 
 	AR_Graphics(state);
-	AR_DebugInit(state);
+//	AR_DebugInit(state);
 
 	//kazmath test
 	kmVec3 testVector;
 	kmMat4 testMatrix;
 	kmMat4RotationZ(&testMatrix, kmPI/2.0f);
 	testVector.x = 10.0f;
+	testVector.y = 1.111f;
+	printf("testVector: (x%f, y%f, z%f)\n", testVector.x, testVector.y, testVector.z);
 	kmVec3Transform(&testVector, &testVector, &testMatrix);
 	printf("testVector: (x%f, y%f, z%f)\n", testVector.x, testVector.y, testVector.z);
 
@@ -40,19 +42,17 @@ int main(int argNum, char** args) {
 	AR_CheckGL();
 
 	//Make Some Sprites
-	AR_SimpleSprite* mySprites;
-	mySprites = AR_CreateSimpleSprites(5);
+	AR_SimpleSprite* mySprite;
+	mySprite = AR_CreateSimpleSprite();
 
-	for(int i = 0; i < 5; i++) {
-		mySprites[i].x = 0.2f*i;
-		mySprites[i].y = 0.0f;
-	}
+	mySprite->position.x = 0.0f;
+	mySprite->position.y = 0.0f;
 
 	for(;;) {
 		AR_Cls();
 
 		//AR_DebugDraw(state);
-		AR_SimpleSprite_Draw(mySprites, 5);
+		AR_SimpleSprite_Draw(mySprite);
 
 
 		glFlush();
