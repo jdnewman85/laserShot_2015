@@ -41,7 +41,16 @@ AR_SimpleSprite* AR_CreateSimpleSprite() {
 	AR_Vec2_Set(&(this->scale), 1.0f, 1.0f);
 	AR_Vec4_Set(&(this->color), 1.0f, 0.0f, 0.0f, 1.0f);
 	this->rotation = 0.0f;
-	this->quad = AR_CreateQuad();
+
+	AR_Vec2* quad;
+	quad = AR_CreateQuad();
+
+	AR_Vec2_Set(&quad[0], -1.0f, -1.0f);
+	AR_Vec2_Set(&quad[1],  1.0f, -1.0f);
+	AR_Vec2_Set(&quad[2],  1.0f,  1.0f);
+	AR_Vec2_Set(&quad[3], -1.0f,  1.0f);
+
+	this->quad = quad;
 
 	return this;
 }

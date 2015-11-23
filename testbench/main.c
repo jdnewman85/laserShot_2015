@@ -15,8 +15,9 @@ int main(int argNum, char** args) {
 
 	printf("initGL\n");
 
-	AR_Graphics(state);
+	AR_Graphics(state); //TODO Add the inits to AR_Graphics
 //	AR_DebugInit(state);
+	AR_SimpleSpriteInit();
 
 	//kazmath test
 	kmVec3 testVector;
@@ -27,9 +28,6 @@ int main(int argNum, char** args) {
 	printf("testVector: (x%f, y%f, z%f)\n", testVector.x, testVector.y, testVector.z);
 	kmVec3Transform(&testVector, &testVector, &testMatrix);
 	printf("testVector: (x%f, y%f, z%f)\n", testVector.x, testVector.y, testVector.z);
-
-	//Test Load of Sprite stuffs
-	AR_SimpleSpriteInit();
 
 	//Test load a png
 	AR_Texture* myTexture;
@@ -47,15 +45,6 @@ int main(int argNum, char** args) {
 
 	mySprite->position.x = 0.0f;
 	mySprite->position.y = 0.0f;
-	//TODO TODO TODO
-	//Setup the quad to draw
-	AR_Vec2* quad;
-	quad = mySprite->quad;
-
-	AR_Vec2_Set(&quad[0], -1.0f, -1.0f);
-	AR_Vec2_Set(&quad[1],  1.0f, -1.0f);
-	AR_Vec2_Set(&quad[2],  1.0f,  1.0f);
-	AR_Vec2_Set(&quad[3], -1.0f,  1.0f);
 
 	for(;;) {
 		AR_Cls();
