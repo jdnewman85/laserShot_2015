@@ -21,6 +21,7 @@ static kmVec2* TextureCoordData;
 
 void AR_SimpleSpriteInit() {
 	//TODO Return errors (Since files could be missing, and assert won't be in release build)
+	//TODO Seriously handle errors, asserts in this can be triggered by shader sources
 	
 	//Load Shader
 	ShaderProgram = AR_LoadShaderProgram("./shader/SimpleSprite");
