@@ -45,6 +45,10 @@ int main(int argNum, char** args) {
 
 	sprite1->position.x = 0.0f;
 	sprite1->position.y = 0.0f;
+	sprite1->size.x = 0.5f;
+	sprite1->size.y = 0.5f;
+	AR_SimpleSprite_UpdateQuad(sprite1);
+
 
 	for(;;) {
 		AR_Cls();
