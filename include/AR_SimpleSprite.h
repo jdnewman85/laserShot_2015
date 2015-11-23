@@ -11,7 +11,7 @@ typedef struct {
 	AR_Vec2	scale;
 	AR_Vec4	color;
 	AR_Float32 rotation;
-	AR_Quad* quad;
+	AR_Vec2* quad;
 } AR_SimpleSprite;
 
 void AR_SimpleSpriteInit();

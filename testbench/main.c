@@ -47,6 +47,15 @@ int main(int argNum, char** args) {
 
 	mySprite->position.x = 0.0f;
 	mySprite->position.y = 0.0f;
+	//TODO TODO TODO
+	//Setup the quad to draw
+	AR_Vec2* quad;
+	quad = mySprite->quad;
+
+	AR_Vec2_Set(&quad[0], -1.0f, -1.0f);
+	AR_Vec2_Set(&quad[1],  1.0f, -1.0f);
+	AR_Vec2_Set(&quad[2],  1.0f,  1.0f);
+	AR_Vec2_Set(&quad[3], -1.0f,  1.0f);
 
 	for(;;) {
 		AR_Cls();

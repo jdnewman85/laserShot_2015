@@ -29,7 +29,7 @@ void AR_SimpleSpriteInit() {
 	
 	//Setup Attributes
 	Vao = AR_CreateVao();
-	AR_Vao_SetAttribute(Vao, vertPosAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, /*(GLvoid*)offsetof(AR_Quad, x)*/ 0);
+	AR_Vao_SetAttribute(Vao, vertPosAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, /*(GLvoid*)offsetof(AR_Vec2, x)*/ 0);
 }
 
 AR_SimpleSprite* AR_CreateSimpleSprite() {
@@ -51,7 +51,7 @@ void AR_SimpleSprite_Draw(AR_SimpleSprite* this) {
 	glBindBuffer(GL_ARRAY_BUFFER, Buffer); //TODO OPT ask for buffer?
 	AR_Vao_Bind(Vao);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(AR_Quad), this->quad, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(AR_Vec2)*4, this->quad, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	//OPT Need?, debug only?

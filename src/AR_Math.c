@@ -20,10 +20,10 @@ void AR_Vec4_Set(AR_Vec4* this, AR_Float32 x, AR_Float32 y, AR_Float32 z, AR_Flo
 	this->w = w;
 }
 
-AR_Quad* AR_CreateQuad() {
-	AR_Quad* this;
+AR_Vec2* AR_CreateQuad() {
+	AR_Vec2* this;
 
-	this = (AR_Quad*)malloc(sizeof(AR_Quad));
+	this = (AR_Vec2*)malloc(sizeof(AR_Vec2)*4);
 	//TODO Zero?
 
 	return this;
