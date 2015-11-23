@@ -16,8 +16,7 @@ static AR_Vao* Vao;
 static GLuint VertexBuffer; //OPT Better variable names?
 static GLuint TextureCoordBuffer;
 
-static kmVec2* TextureCoordData;
-
+static kmVec2* TextureCoordData; //TODO Does this really need to be global?
 
 void AR_SimpleSpriteInit() {
 	//TODO Return errors (Since files could be missing, and assert won't be in release build)
