@@ -15,6 +15,7 @@ typedef struct {
 
 void AR_SimpleSpriteInit();
 AR_SimpleSprite* AR_CreateSimpleSprite();
+void AR_SimpleSprite_UpdateQuad(AR_SimpleSprite* this);
 void AR_SimpleSprite_Draw(AR_SimpleSprite* this);
 
 #endif //__AR_SIMPLESPRITE_H__

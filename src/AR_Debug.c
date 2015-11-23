@@ -49,7 +49,8 @@ GLuint AR_LoadShaderProgram(char* filename) {
 	return program;
 }
 
-void AR_DebugInit(StateGL_t *state) {
+/*
+void AR_DebugDrawableInit(StateGL_t *state) {
 	const GLfloat vertex_data[] = {
 		-1.0,	-1.0,
 		 1.0,	-1.0,
@@ -116,4 +117,5 @@ void AR_DebugDraw(StateGL_t *state) {
         eglSwapBuffers(state->display, state->surface);
         AR_CheckGL();
 }
+*/
 

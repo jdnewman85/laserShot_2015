@@ -6,8 +6,11 @@
 #include "AR_Misc.h"
 
 GLuint AR_LoadShaderProgram(char* filename);
-void AR_DebugInit(StateGL_t *state);
+
+/*
+void AR_DebugDrawableInit(StateGL_t *state);
 void AR_DebugDraw(StateGL_t *state);
+*/
 
 #endif //__AR_DEBUG_H__
 

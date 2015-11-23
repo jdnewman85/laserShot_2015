@@ -5,6 +5,8 @@
 
 #include "AR_Vao.h"
 
+//TODO Kind of need a better way to bind buffer, and update data
+
 AR_Vao* AR_CreateVao() {
 	//OPT Store vao->attributes pointer to prevent so many dereferences?
 	AR_Vao* newVao;
@@ -12,8 +14,8 @@ AR_Vao* AR_CreateVao() {
 
 	for(int i = 0; i < GL_MAX_VERTEX_ATTRIBS; i++) {
 		newVao->attributes[i].enabled = false;
-		newVao->attributes[i].bufferId = -1; //To cause an error if not set
-		newVao->attributes[i].index = -1; //To cause an error if not set
+		newVao->attributes[i].bufferId = -1; //To cause an error if not set //BUG TODO Doesn't actually cause an error
+		newVao->attributes[i].index = -1; //To cause an error if not set //BUG Unsure if this actually causes an error
 		newVao->attributes[i].size = 4;
 		newVao->attributes[i].type = GL_FLOAT;
 		newVao->attributes[i].normalized = GL_FALSE;
@@ -24,13 +26,13 @@ AR_Vao* AR_CreateVao() {
 	return newVao;
 }
 
-void AR_Vao_SetAttribute(AR_Vao* vao, GLuint index, GLint size, GLenum type,
-		GLboolean normalized, GLsizei stride, GLvoid* pointer) {
-	//NOTE Requires buffer to be set elsewhere?
+void AR_Vao_SetAttribute(AR_Vao* vao, GLuint bufferId, GLuint index, GLint size,
+		GLenum type, GLboolean normalized, GLsizei stride, GLvoid* pointer) {
 	//NOTE OPT Defaults in CreateVao aren't really possible (always get set here)
 	//OPT Store vao->attributes pointer to prevent so many dereferences?
 	
 	vao->attributes[index].enabled = true;
+	vao->attributes[index].bufferId = bufferId;
 	vao->attributes[index].index = index;
 	vao->attributes[index].size = size;
 	vao->attributes[index].type = type;
