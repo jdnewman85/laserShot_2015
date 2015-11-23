@@ -4,7 +4,7 @@
 
 #include "AR_Vao.h"
 #include "AR_Debug.h"
-#include "AR_Math.h" //OPT Already in AR_SimpleSprite.h
+#include "AR_Misc.h"
 #include "AR_SimpleSprite.h"
 
 //OPT COULD MAYBE MAKE THIS WHOLE THING INTO A CLASS IT'S OWN
@@ -36,31 +36,35 @@ AR_SimpleSprite* AR_CreateSimpleSprite() {
 	AR_SimpleSprite* this;
 	this = (AR_SimpleSprite*)malloc(sizeof(AR_SimpleSprite));
 
-	AR_Vec2_Set(&(this->position), 0.0f, 0.0f);
-	AR_Vec2_Set(&(this->size), 100.0f, 100.0f);
-	AR_Vec2_Set(&(this->scale), 1.0f, 1.0f);
-	AR_Vec4_Set(&(this->color), 1.0f, 0.0f, 0.0f, 1.0f);
-	this->rotation = 0.0f;
+	kmVec2Fill(&(this->position), 0.0f, 0.0f);
+	kmVec2Fill(&(this->size), 100.0f, 100.0f);
 
-	AR_Vec2* quad;
+	kmVec2* quad;
 	quad = AR_CreateQuad();
 
-	AR_Vec2_Set(&quad[0], -1.0f, -1.0f);
-	AR_Vec2_Set(&quad[1],  1.0f, -1.0f);
-	AR_Vec2_Set(&quad[2],  1.0f,  1.0f);
-	AR_Vec2_Set(&quad[3], -1.0f,  1.0f);
+	kmVec2Fill(&quad[0], -1.0f, -1.0f);
+	kmVec2Fill(&quad[1],  1.0f, -1.0f);
+	kmVec2Fill(&quad[2],  1.0f,  1.0f);
+	kmVec2Fill(&quad[3], -1.0f,  1.0f);
 
 	this->quad = quad;
 
 	return this;
 }
 
+/*
+void AR_SimpleSprite_UpdateQuad(AR_SimpleSprite* this) {
+	//Calculate quad from sprite data
+	
+}
+*/
+
 void AR_SimpleSprite_Draw(AR_SimpleSprite* this) {
 	glUseProgram(ShaderProgram); //TODO OPT Change to use shader object later?
 	glBindBuffer(GL_ARRAY_BUFFER, Buffer); //TODO OPT ask for buffer?
 	AR_Vao_Bind(Vao);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(AR_Vec2)*4, this->quad, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(kmVec2)*4, this->quad, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	//OPT Need?, debug only?

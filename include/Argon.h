@@ -1,7 +1,6 @@
 #ifndef __ARGON_H__
 #define __ARGON_H__
 
-#include "AR_Math.h"
 #include "AR_Graphics.h"
 #include "AR_Image.h"
 #include "AR_Texture.h"

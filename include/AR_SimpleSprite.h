@@ -3,15 +3,14 @@
 
 #include <GLES2/gl2.h>
 
-#include "AR_Math.h"
-
 typedef struct {
-	AR_Vec2	position;
-	AR_Vec2	size;
-	AR_Vec2	scale;
-	AR_Vec4	color;
-	AR_Float32 rotation;
-	AR_Vec2* quad;
+	kmVec2	position;
+//	kmVec2 offset;
+	kmVec2	size;
+//	kmVec2	scale;
+//	kmVec2	color;
+//	kmScalar rotation;
+	kmVec2* quad;
 } AR_SimpleSprite;
 
 void AR_SimpleSpriteInit();

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include <GLES2/gl2.h>
+#include <kazmath/kazmath.h> //OPT Already included with AR_Misc.h
 
 #include "AR_Misc.h"
 
@@ -68,5 +69,14 @@ char* AR_LoadStringFromFile( char* filename ) {
 		return tempString;//???Already got our string
 	}
 	return tempString;
+}
+
+kmVec2* AR_CreateQuad() {
+	kmVec2* this;
+
+	this = (kmVec2*)malloc(sizeof(kmVec2)*4);
+	//TODO Zero?
+
+	return this;
 }
 

@@ -40,17 +40,17 @@ int main(int argNum, char** args) {
 	AR_CheckGL();
 
 	//Make Some Sprites
-	AR_SimpleSprite* mySprite;
-	mySprite = AR_CreateSimpleSprite();
+	AR_SimpleSprite* sprite1;
+	sprite1 = AR_CreateSimpleSprite();
 
-	mySprite->position.x = 0.0f;
-	mySprite->position.y = 0.0f;
+	sprite1->position.x = 0.0f;
+	sprite1->position.y = 0.0f;
 
 	for(;;) {
 		AR_Cls();
 
 		//AR_DebugDraw(state);
-		AR_SimpleSprite_Draw(mySprite);
+		AR_SimpleSprite_Draw(sprite1);
 
 
 		glFlush();

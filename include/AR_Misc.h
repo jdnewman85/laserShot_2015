@@ -5,6 +5,7 @@
 
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
+#include <kazmath/kazmath.h>
 
 #include "AR_Image.h"
 #include "AR_Texture.h"
@@ -27,6 +28,8 @@ typedef struct {
 void AR_PrintShaderLog(GLint shader);
 void AR_PrintProgramLog(GLint shader);
 char* AR_LoadStringFromFile(char* filename);
+
+kmVec2* AR_CreateQuad();
 
 #endif //__AR_MISC_H__
 
