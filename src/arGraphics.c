@@ -12,8 +12,6 @@
 
 EGL_DISPMANX_WINDOW_T nativewindow; //IMPORTANT! Must be static or global
 
-kmMat4 arProjectionMatrix;
-
 void arGraphics(arGlState *state) {
 //Arguments: CUBE_STATE_T *state - holds OGLES model info
 //Description: Sets the display, OpenGL|ES context and screen stuff
@@ -75,20 +73,20 @@ void arGraphics(arGlState *state) {
 	arAssertGl();
 	
 	//Setup Window Surface
-	success = graphics_get_display_size(0 /* LCD */, &state->screen_width, &state->screen_height);
+	success = graphics_get_display_size(0 /* LCD */, &state->displayWidth, &state->displayHeight);
 	assert( success >= 0 );
 	//DEBUG
-	fprintf(stderr, "Display Size: '%dx%d'\n", state->screen_width, state->screen_height);
+	fprintf(stderr, "Display Size: '%dx%d'\n", state->displayWidth, state->displayHeight);
 	
 	dst_rect.x = 0;
 	dst_rect.y = 0;
-	dst_rect.width = state->screen_width;
-	dst_rect.height = state->screen_height;
+	dst_rect.width = state->displayWidth;
+	dst_rect.height = state->displayHeight;
 	   
 	src_rect.x = 0;
 	src_rect.y = 0;
-	src_rect.width = state->screen_width << 16;
-	src_rect.height = state->screen_height << 16;        
+	src_rect.width = state->displayWidth << 16;
+	src_rect.height = state->displayHeight << 16;        
 	
 	dispman_display = vc_dispmanx_display_open( 0 /* LCD */);
 	dispman_update = vc_dispmanx_update_start(0);
@@ -98,8 +96,8 @@ void arGraphics(arGlState *state) {
 		&src_rect, DISPMANX_PROTECTION_NONE, 0 /*alpha*/, 0/*clamp*/, 0/*transform*/);
 	   
 	nativewindow.element = dispman_element;
-	nativewindow.width = state->screen_width;
-	nativewindow.height = state->screen_height;
+	nativewindow.width = state->displayWidth;
+	nativewindow.height = state->displayHeight;
 	vc_dispmanx_update_submit_sync(dispman_update);
 	arAssertGl();
 	
@@ -118,7 +116,7 @@ void arGraphics(arGlState *state) {
 	arAssertGl();
 
 	// Prepare viewport
-	glViewport (0, 0, state->screen_width, state->screen_height);
+	glViewport (0, 0, state->displayWidth, state->displayHeight);
 	arAssertGl();
 
 	// Framebuffer
@@ -126,7 +124,7 @@ void arGraphics(arGlState *state) {
 	arAssertGl();
 
 	//Setup Projection Matrix
-	kmMat4OrthographicProjection(&arProjectionMatrix, 0.0f, state->screen_width, 0.0f, state->screen_height, -1.0f, 1.0f);
+	kmMat4OrthographicProjection(&(state->projectionMatrix), 0.0f, state->displayWidth, 0.0f, state->displayHeight, -1.0f, 1.0f);
 
 	state->context = context; //OPT REmove state->context?
 }

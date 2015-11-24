@@ -15,8 +15,9 @@ int main(int argNum, char** args) {
 
 	printf("initGL\n");
 
+	//TODO Maybe arGraphics returns the state?
 	arGraphics(state); //TODO Add the inits to arGraphics
-	arSimpleSpriteInit();
+	arSimpleSpriteInit(state);
 	arAssertGl();
 
 	//kazmath test
@@ -55,10 +56,10 @@ int main(int argNum, char** args) {
 
 	arSimpleSprite* sprite2;
 	sprite2 = arCreateSimpleSprite();
-	sprite2->position.x = -0.5f;
-	sprite2->position.y = -0.5f;
-	sprite2->size.x = 0.5f;
-	sprite2->size.y = 0.5f;
+	sprite2->position.x = state->displayWidth/2 - 250;
+	sprite2->position.y = state->displayHeight/2 - 250;
+	sprite2->size.x = 500;
+	sprite2->size.y = 500;
 	arSimpleSprite_UpdateQuad(sprite2);
 
 	for(;;) {

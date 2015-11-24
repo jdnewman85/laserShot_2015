@@ -13,7 +13,7 @@ typedef struct {
 	kmVec2* quad;
 } arSimpleSprite;
 
-void arSimpleSpriteInit();
+void arSimpleSpriteInit(arGlState* state);
 arSimpleSprite* arCreateSimpleSprite();
 void arSimpleSprite_UpdateQuad(arSimpleSprite* this);
 void arSimpleSprite_Draw(arSimpleSprite* this);

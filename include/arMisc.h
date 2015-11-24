@@ -11,16 +11,14 @@
 #include "arTexture.h"
 
 typedef struct {
-	uint32_t screen_width;
-	uint32_t screen_height;
+	uint32_t displayWidth, displayHeight;
 
 	// OpenGL|ES objects
 	EGLDisplay display;
 	EGLSurface surface;
 	EGLContext context;
 	
-	GLuint program;
-	GLuint vertexBuffer;
+	kmMat4 projectionMatrix;
 } arGlState;
 
 #define arAssertGl() assert(glGetError() == 0);

@@ -18,7 +18,7 @@ static GLuint TextureCoordBuffer;
 
 static kmVec2* TextureCoordData; //TODO Do these really need to be global? Also, maybe Stack?
 
-void arSimpleSpriteInit() {
+void arSimpleSpriteInit(arGlState* state) {
 	//TODO Return errors (Since files could be missing, and assert won't be in release build)
 	//TODO Seriously handle errors, asserts in this can be triggered by shader sources
 	
@@ -61,15 +61,7 @@ void arSimpleSpriteInit() {
 	GLint projectionMatrixLoc;
 	projectionMatrixLoc = glGetUniformLocation(ShaderProgram, "projectionMatrix");
 	assert(projectionMatrixLoc != -1);
-	/*
-	printf("arProjectionMatrix:\n");
-	printf("%f\t%f\t%f\t%f\n", arProjectionMatrix.mat[0], arProjectionMatrix.mat[4], arProjectionMatrix.mat[ 8], arProjectionMatrix.mat[12]);
-	printf("%f\t%f\t%f\t%f\n", arProjectionMatrix.mat[1], arProjectionMatrix.mat[5], arProjectionMatrix.mat[ 9], arProjectionMatrix.mat[13]);
-	printf("%f\t%f\t%f\t%f\n", arProjectionMatrix.mat[2], arProjectionMatrix.mat[6], arProjectionMatrix.mat[10], arProjectionMatrix.mat[14]);
-	printf("%f\t%f\t%f\t%f\n", arProjectionMatrix.mat[3], arProjectionMatrix.mat[7], arProjectionMatrix.mat[11], arProjectionMatrix.mat[15]);
-	printf("ProjectionTransformLocation: %d\n", projectionMatrixLoc);
-	*/
-	glUniformMatrix4fv(projectionMatrixLoc, 1, GL_FALSE, (GLfloat*)&arProjectionMatrix);
+	glUniformMatrix4fv(projectionMatrixLoc, 1, GL_FALSE, (GLfloat*)&(state->projectionMatrix));
 }
 
 arSimpleSprite* arCreateSimpleSprite() {
@@ -102,7 +94,6 @@ void arSimpleSprite_UpdateQuad(arSimpleSprite* this) {
 	kmVec2Fill(&quad[1], right, bottom); //BR
 	kmVec2Fill(&quad[2], right,    top); //TR
 	kmVec2Fill(&quad[3],  left,    top); //TL
-
 
 	//IDEA OPT TODO May move the transform stuffs to it's own class...
 	//TODO OPT Need to store either the transformation matrix, or the final quad and only update if dirty
