@@ -1,16 +1,16 @@
 #include <stdlib.h>
-#include <stdbool.h> //OPT Already in AR_Vao.h
+#include <stdbool.h> //OPT Already in arVao.h
 
-#include <GLES2/gl2.h> //OPT Already in AR_Vao.h
+#include <GLES2/gl2.h> //OPT Already in arVao.h
 
-#include "AR_Vao.h"
+#include "arVao.h"
 
 //TODO Kind of need a better way to bind buffer, and update data
 
-AR_Vao* AR_CreateVao() {
+arVao* arCreateVao() {
 	//OPT Store vao->attributes pointer to prevent so many dereferences?
-	AR_Vao* newVao;
-	newVao = (AR_Vao*)malloc(sizeof(AR_Vao));
+	arVao* newVao;
+	newVao = (arVao*)malloc(sizeof(arVao));
 
 	for(int i = 0; i < GL_MAX_VERTEX_ATTRIBS; i++) {
 		newVao->attributes[i].enabled = false;
@@ -26,7 +26,7 @@ AR_Vao* AR_CreateVao() {
 	return newVao;
 }
 
-void AR_Vao_SetAttribute(AR_Vao* vao, GLuint bufferId, GLuint index, GLint size,
+void arVao_SetAttribute(arVao* vao, GLuint bufferId, GLuint index, GLint size,
 		GLenum type, GLboolean normalized, GLsizei stride, GLvoid* pointer) {
 	//NOTE OPT Defaults in CreateVao aren't really possible (always get set here)
 	//OPT Store vao->attributes pointer to prevent so many dereferences?
@@ -41,7 +41,7 @@ void AR_Vao_SetAttribute(AR_Vao* vao, GLuint bufferId, GLuint index, GLint size,
 	vao->attributes[index].pointer = pointer;
 }
 
-void AR_Vao_Bind(AR_Vao* vao) {
+void arVao_Bind(arVao* vao) {
 	//OPT Store vao->attributes pointer to prevent so many dereferences?
 	if(vao == NULL) {
 		for(int i = 0; i < GL_MAX_VERTEX_ATTRIBS; i++) {

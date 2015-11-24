@@ -3,9 +3,9 @@
 #include <stdint.h> //OPT already included/unneeded from stdlib.h
 
 #include "../lib/lodepng.h"
-#include "AR_Image.h"
+#include "arImage.h"
 
-AR_Image* AR_LoadImage(char* filename) {
+arImage* arLoadImage(char* filename) {
 	uint32_t error;
 	uint32_t width, height;
 	uint8_t* data;
@@ -14,8 +14,8 @@ AR_Image* AR_LoadImage(char* filename) {
 	assert(error == 0);
 
 	//Good
-	AR_Image* newImage;
-	newImage = (AR_Image*)(malloc(sizeof(AR_Image)));
+	arImage* newImage;
+	newImage = (arImage*)(malloc(sizeof(arImage)));
 	
 	newImage->width = width;
 	newImage->height = height;
@@ -24,7 +24,7 @@ AR_Image* AR_LoadImage(char* filename) {
 	return newImage;
 }
 
-void AR_Image_Destroy(AR_Image* image) {
+void arImage_Destroy(arImage* image) {
 	free(image->data);
 	free(image);
 }

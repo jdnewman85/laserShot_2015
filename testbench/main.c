@@ -3,9 +3,9 @@
 #include <GLES2/gl2.h>
 #include <kazmath/kazmath.h>
 
-#include "../include/Argon.h"
+#include "../include/argon.h"
 
-static StateGL_t _state, *state=&_state;
+static arGlState _state, *state=&_state;
 
 int main(int argNum, char** args) {
 	printf("Number of arguements: %d\n", argNum);
@@ -15,9 +15,8 @@ int main(int argNum, char** args) {
 
 	printf("initGL\n");
 
-	AR_Graphics(state); //TODO Add the inits to AR_Graphics
-//	AR_DebugInit(state);
-	AR_SimpleSpriteInit();
+	arGraphics(state); //TODO Add the inits to arGraphics
+	arSimpleSpriteInit();
 
 	//kazmath test
 	kmVec3 testVector;
@@ -30,43 +29,41 @@ int main(int argNum, char** args) {
 	printf("testVector: (x%f, y%f, z%f)\n", testVector.x, testVector.y, testVector.z);
 
 	//Test load a png
-	AR_Texture* myTexture;
-	myTexture = AR_LoadTexture("./img/test.png");
-	AR_CheckGL();
+	arTexture* myTexture;
+	myTexture = arLoadTexture("./img/test.png");
+	arAssertGl();
 	printf("Images, bitches\n");
 
 	//TEMP TEXTURE SHIT
 	glBindTexture(GL_TEXTURE_2D, myTexture->textureId);
-	AR_CheckGL();
+	arAssertGl();
 
 	//Make Some Sprites
-	AR_SimpleSprite* sprite1;
-	sprite1 = AR_CreateSimpleSprite();
+	arSimpleSprite* sprite1;
+	sprite1 = arCreateSimpleSprite();
 	sprite1->position.x = 0.0f;
 	sprite1->position.y = 0.0f;
 	sprite1->size.x = 0.5f;
 	sprite1->size.y = 0.5f;
-	AR_SimpleSprite_UpdateQuad(sprite1);
+	arSimpleSprite_UpdateQuad(sprite1);
 
-	AR_SimpleSprite* sprite2;
-	sprite2 = AR_CreateSimpleSprite();
+	arSimpleSprite* sprite2;
+	sprite2 = arCreateSimpleSprite();
 	sprite2->position.x = -0.5f;
 	sprite2->position.y = -0.5f;
 	sprite2->size.x = 0.5f;
 	sprite2->size.y = 0.5f;
-	AR_SimpleSprite_UpdateQuad(sprite2);
+	arSimpleSprite_UpdateQuad(sprite2);
 
 	for(;;) {
-		AR_Cls();
+		arCls();
 
-		//AR_DebugDraw(state);
-		AR_SimpleSprite_Draw(sprite1);
-		AR_SimpleSprite_Draw(sprite2);
-
+		arSimpleSprite_Draw(sprite1);
+		arSimpleSprite_Draw(sprite2);
 
 		glFlush();
 		glFinish();
-		AR_Flip(state);
+		arFlip(state);
 	}
        
 

@@ -1,5 +1,5 @@
-#ifndef __AR_VAO_H__
-#define __AR_VAO_H__
+#ifndef __arVAO_H__
+#define __arVAO_H__
 
 #include <stdbool.h>
 
@@ -14,17 +14,17 @@ typedef struct {
 	GLboolean normalized;
 	GLsizei stride;
 	GLvoid* pointer;
-} AR_VertexAttribute;
+} arVertexAttribute;
 
 typedef struct {
-	AR_VertexAttribute attributes[GL_MAX_VERTEX_ATTRIBS];
-} AR_Vao;
+	arVertexAttribute attributes[GL_MAX_VERTEX_ATTRIBS];
+} arVao;
 
 
-AR_Vao* AR_CreateVao();
-void AR_Vao_SetAttribute(AR_Vao* vao, GLuint bufferId, GLuint index, GLint size,
+arVao* arCreateVao();
+void arVao_SetAttribute(arVao* vao, GLuint bufferId, GLuint index, GLint size,
 		GLenum type, GLboolean normalized, GLsizei stride, GLvoid* pointer);
-void AR_Vao_Bind(AR_Vao* vao);
+void arVao_Bind(arVao* vao);
 
-#endif //__AR_VAO_H__
+#endif //__arVAO_H__
 

@@ -6,13 +6,13 @@
 
 #include <bcm_host.h>
 
-#include "AR_Misc.h" //Opt in Graphics.h
+#include "arMisc.h" //Opt in Graphics.h
 
 #define GLES_VERSION 2
 
 EGL_DISPMANX_WINDOW_T nativewindow; //IMPORTANT! Must be static or global
 
-void AR_Graphics(StateGL_t *state) {
+void arGraphics(arGlState *state) {
 //Arguments: CUBE_STATE_T *state - holds OGLES model info
 //Description: Sets the display, OpenGL|ES context and screen stuff
 //TODO Rewrite bits to have variables closer to use
@@ -49,28 +49,28 @@ void AR_Graphics(StateGL_t *state) {
 	//Get EGL Display
 	state->display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	assert(state->display!=EGL_NO_DISPLAY);
-	AR_CheckGL();
+	arAssertGl();
 	
 	//Init EGL Display
 	result = eglInitialize(state->display, NULL, NULL);
 	assert(EGL_FALSE != result);
-	AR_CheckGL();
+	arAssertGl();
 	
 	//Choose Config //NOTE: Just chooses first match
 	result = eglChooseConfig(state->display, attribute_list, &config, 1, &num_config);
 	assert(EGL_FALSE != result);
-	AR_CheckGL();
+	arAssertGl();
 	
 	//Bind API
 	result = eglBindAPI(EGL_OPENGL_ES_API);
 	assert(EGL_FALSE != result);
-	AR_CheckGL();
+	arAssertGl();
 	
 	//Create Rendering Context
 	EGLContext context;
 	context = eglCreateContext(state->display, config, EGL_NO_CONTEXT, context_attributes);
 	assert(context!=EGL_NO_CONTEXT);
-	AR_CheckGL();
+	arAssertGl();
 	
 	//Setup Window Surface
 	success = graphics_get_display_size(0 /* LCD */, &state->screen_width, &state->screen_height);
@@ -100,38 +100,38 @@ void AR_Graphics(StateGL_t *state) {
 	nativewindow.height = state->screen_height;
 	vc_dispmanx_update_submit_sync(dispman_update);
 	   
-	AR_CheckGL();
+	arAssertGl();
 	
 	state->surface = eglCreateWindowSurface(state->display, config, &nativewindow, NULL);
 	assert(state->surface != EGL_NO_SURFACE);
-	AR_CheckGL();
+	arAssertGl();
 	
 	//Connect context and surface
 	result = eglMakeCurrent(state->display, state->surface, state->surface, context);
 	assert(EGL_FALSE != result);
-	AR_CheckGL();
+	arAssertGl();
 
 	// Set background color and clear buffers
 	glClearColor(0.00f, 0.00f, 0.95f, 1.0f); //OPT Remove?
 	glClear(GL_COLOR_BUFFER_BIT);
-	AR_CheckGL();
+	arAssertGl();
 
 	// Prepare viewport
 	glViewport (0, 0, state->screen_width, state->screen_height);
-	AR_CheckGL();
+	arAssertGl();
 
 	// Framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	AR_CheckGL();
+	arAssertGl();
 
 	state->context = context; //OPT REmove state->context?
 }
 
-void AR_Cls() {
+void arCls() {
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void AR_Flip(StateGL_t *state) {
+void arFlip(arGlState *state) {
         eglSwapBuffers(state->display, state->surface);
 }
 

@@ -1,31 +1,31 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include <GLES2/gl2.h> //OPT Already in AR_SimpleSprite.h
+#include <GLES2/gl2.h> //OPT Already in arSimpleSprite.h
 
-#include "AR_Vao.h"
-#include "AR_Misc.h"
-#include "AR_SimpleSprite.h"
+#include "arVao.h"
+#include "arMisc.h"
+#include "arSimpleSprite.h"
 
 //OPT COULD MAYBE MAKE THIS WHOLE THING INTO A CLASS IT'S OWN
 //USE MAP FOR ATTRIBUTES?
 
 static GLuint ShaderProgram;
-static AR_Vao* Vao;
+static arVao* Vao;
 static GLuint VertexBuffer; //OPT Better variable names?
 static GLuint TextureCoordBuffer;
 
 static kmVec2* TextureCoordData; //TODO Does this really need to be global?
 
-void AR_SimpleSpriteInit() {
+void arSimpleSpriteInit() {
 	//TODO Return errors (Since files could be missing, and assert won't be in release build)
 	//TODO Seriously handle errors, asserts in this can be triggered by shader sources
 	
 	//Load Shader
-	ShaderProgram = AR_LoadShaderProgram("./shader/SimpleSprite");
+	ShaderProgram = arLoadShaderProgram("./shader/SimpleSprite");
 
 	//Setup Attributes
-	Vao = AR_CreateVao();
+	Vao = arCreateVao();
 
 	//-Vertex Positions
 	//--Alocate buffer
@@ -35,7 +35,7 @@ void AR_SimpleSpriteInit() {
 	vertPosAttribLoc = glGetAttribLocation(ShaderProgram, "vertPos");
 	assert(vertPosAttribLoc >= 0);
 	//--Set
-	AR_Vao_SetAttribute(Vao, VertexBuffer, vertPosAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, /*(GLvoid*)offsetof(AR_Vec2, x)*/ 0);
+	arVao_SetAttribute(Vao, VertexBuffer, vertPosAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, /*(GLvoid*)offsetof(arVec2, x)*/ 0);
 
 	//-Texture Coordinates
 	glGenBuffers(1, &TextureCoordBuffer);
@@ -44,7 +44,7 @@ void AR_SimpleSpriteInit() {
 	vertTexCoordAttribLoc = glGetAttribLocation(ShaderProgram, "vertTexCoord");
 	assert(vertTexCoordAttribLoc >= 0);
 	//--Set
-	AR_Vao_SetAttribute(Vao, TextureCoordBuffer, vertTexCoordAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	arVao_SetAttribute(Vao, TextureCoordBuffer, vertTexCoordAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	//Constant for SimpleSprite, so let's set the data up now
 	TextureCoordData = (kmVec2*)malloc(sizeof(kmVec2)*4);
@@ -57,21 +57,21 @@ void AR_SimpleSpriteInit() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(kmVec2)*4, TextureCoordData, GL_STATIC_DRAW);
 }
 
-AR_SimpleSprite* AR_CreateSimpleSprite() {
-	AR_SimpleSprite* this;
-	this = (AR_SimpleSprite*)malloc(sizeof(AR_SimpleSprite));
+arSimpleSprite* arCreateSimpleSprite() {
+	arSimpleSprite* this;
+	this = (arSimpleSprite*)malloc(sizeof(arSimpleSprite));
 
 	kmVec2Fill(&(this->position), -1.0f, -1.0f);
 	kmVec2Fill(&(this->size), 2.0f, 2.0f);
 
-	this->quad = AR_CreateQuad();
+	this->quad = arCreateQuad();
 
-	AR_SimpleSprite_UpdateQuad(this);
+	arSimpleSprite_UpdateQuad(this);
 
 	return this;
 }
 
-void AR_SimpleSprite_UpdateQuad(AR_SimpleSprite* this) {
+void arSimpleSprite_UpdateQuad(arSimpleSprite* this) {
 	//Calculate quad from sprite data
 	
 	kmScalar left, bottom, right, top;
@@ -89,16 +89,16 @@ void AR_SimpleSprite_UpdateQuad(AR_SimpleSprite* this) {
 	kmVec2Fill(&quad[3],  left,    top); //TL
 }
 
-void AR_SimpleSprite_Draw(AR_SimpleSprite* this) {
+void arSimpleSprite_Draw(arSimpleSprite* this) {
 	glUseProgram(ShaderProgram); //TODO OPT Change to use shader object later?
-	AR_Vao_Bind(Vao);
+	arVao_Bind(Vao);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer); //TODO Maybe somehow allow this to be done in the Vao_Bind()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(kmVec2)*4, this->quad, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	//OPT Need?, debug only?
-	AR_Vao_Bind(0);
+	arVao_Bind(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glUseProgram(0);
 }

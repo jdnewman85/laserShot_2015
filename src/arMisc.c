@@ -2,15 +2,15 @@
 #include <stdlib.h>
 
 #include <GLES2/gl2.h>
-#include <kazmath/kazmath.h> //OPT Already included with AR_Misc.h
+#include <kazmath/kazmath.h> //OPT Already included with arMisc.h
 
-#include "AR_Misc.h"
+#include "arMisc.h"
 
 
 //Simple Opengl stuffs
-//#define AR_CheckGL() = assert(glGetError() == 0)
+//#define arAssertGl() = assert(glGetError() == 0)
 
-void AR_PrintShaderLog(GLint shader) {
+void arPrintShaderLog(GLint shader) {
    // Prints the compile log for a shader
    char log[1024]; //BUG Check actual size
    glGetShaderInfoLog(shader, sizeof log, NULL, log);
@@ -18,14 +18,14 @@ void AR_PrintShaderLog(GLint shader) {
 }
 
 
-void AR_PrintProgramLog(GLint program) {
+void arPrintProgramLog(GLint program) {
    // Prints the information log for a program object
    char log[1024]; //BUG Check actual size
    glGetProgramInfoLog(program, sizeof log, NULL, log);
    printf("%d:program:\n%s\n", program, log);
 }
 
-char* AR_LoadStringFromFile( char* filename ) {
+char* arLoadStringFromFile( char* filename ) {
 	//Returns a string with the entire contents of file
 	//Depends on stdio.h and stdlib.h
 	FILE* inFile;
@@ -71,7 +71,7 @@ char* AR_LoadStringFromFile( char* filename ) {
 	return tempString;
 }
 
-kmVec2* AR_CreateQuad() {
+kmVec2* arCreateQuad() {
 	kmVec2* this;
 
 	this = (kmVec2*)malloc(sizeof(kmVec2)*4);
@@ -80,45 +80,45 @@ kmVec2* AR_CreateQuad() {
 	return this;
 }
 
-GLuint AR_LoadShaderProgram(char* filename) {
+GLuint arLoadShaderProgram(char* filename) {
 	char tempFilename[1024];
 	strcpy(tempFilename, filename);
 	strcat(tempFilename, ".vert");
-	GLchar* vertSource = AR_LoadStringFromFile(tempFilename);
+	GLchar* vertSource = arLoadStringFromFile(tempFilename);
 
 	strcpy(tempFilename, filename);
 	strcat(tempFilename, ".frag");
-	GLchar* fragSource = AR_LoadStringFromFile(tempFilename);
+	GLchar* fragSource = arLoadStringFromFile(tempFilename);
 
 	GLuint vertShader;
 	vertShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertShader, 1, (const GLchar**)&vertSource, 0);
 	glCompileShader(vertShader);
-	AR_CheckGL();
+	arAssertGl();
 
-	AR_PrintShaderLog(vertShader);
+	arPrintShaderLog(vertShader);
 
 	GLuint fragShader;
 	fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragShader, 1, (const GLchar**)&fragSource, 0);
 	glCompileShader(fragShader);
-	AR_CheckGL();
+	arAssertGl();
 
-	AR_PrintShaderLog(fragShader);
+	arPrintShaderLog(fragShader);
 
 	GLuint program;
 	program = glCreateProgram();
 	glAttachShader(program, vertShader);
 	glAttachShader(program, fragShader);
 	glLinkProgram(program);
-	AR_CheckGL();
+	arAssertGl();
 	
 	//Check for proper linking
 	GLint isLinked;
 	glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
-	AR_PrintProgramLog(program);
+	arPrintProgramLog(program);
 	assert(isLinked == GL_TRUE);
-	AR_CheckGL();
+	arAssertGl();
 
 	return program;
 }

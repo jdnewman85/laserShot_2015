@@ -4,12 +4,12 @@
 
 #include "../lib/lodepng.h"
 
-#include "AR_Image.h"
-#include "AR_Texture.h"
+#include "arImage.h"
+#include "arTexture.h"
 
-AR_Texture* AR_LoadTexture(char* filename) {
-	AR_Image* tempImage;
-	tempImage = AR_LoadImage(filename);
+arTexture* arLoadTexture(char* filename) {
+	arImage* tempImage;
+	tempImage = arLoadImage(filename);
 
 	GLuint textureId;
 
@@ -21,19 +21,19 @@ AR_Texture* AR_LoadTexture(char* filename) {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tempImage->width, tempImage->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tempImage->data);
 	glGenerateMipmap(GL_TEXTURE_2D); //OPT Make Optional
 
-	AR_Texture* newTexture;
-	newTexture = (AR_Texture*)(malloc(sizeof(AR_Texture)));
+	arTexture* newTexture;
+	newTexture = (arTexture*)(malloc(sizeof(arTexture)));
 
 	newTexture->width = tempImage->width;
 	newTexture->height = tempImage->height;
 	newTexture->textureId = textureId;
 
-	AR_Image_Destroy(tempImage);
+	arImage_Destroy(tempImage);
 
 	return newTexture;
 }
 
-void AR_Texture_Destroy(AR_Texture* texture) {
+void arTexture_Destroy(arTexture* texture) {
 	glDeleteTextures(1, &texture->textureId);
 
 	free(texture);
