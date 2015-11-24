@@ -4,7 +4,6 @@
 #include <GLES2/gl2.h> //OPT Already in AR_SimpleSprite.h
 
 #include "AR_Vao.h"
-#include "AR_Debug.h"
 #include "AR_Misc.h"
 #include "AR_SimpleSprite.h"
 

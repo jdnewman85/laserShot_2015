@@ -31,5 +31,7 @@ char* AR_LoadStringFromFile(char* filename);
 
 kmVec2* AR_CreateQuad();
 
+GLuint AR_LoadShaderProgram(char* filename);
+
 #endif //__AR_MISC_H__
 

@@ -42,19 +42,26 @@ int main(int argNum, char** args) {
 	//Make Some Sprites
 	AR_SimpleSprite* sprite1;
 	sprite1 = AR_CreateSimpleSprite();
-
 	sprite1->position.x = 0.0f;
 	sprite1->position.y = 0.0f;
 	sprite1->size.x = 0.5f;
 	sprite1->size.y = 0.5f;
 	AR_SimpleSprite_UpdateQuad(sprite1);
 
+	AR_SimpleSprite* sprite2;
+	sprite2 = AR_CreateSimpleSprite();
+	sprite2->position.x = -0.5f;
+	sprite2->position.y = -0.5f;
+	sprite2->size.x = 0.5f;
+	sprite2->size.y = 0.5f;
+	AR_SimpleSprite_UpdateQuad(sprite2);
 
 	for(;;) {
 		AR_Cls();
 
 		//AR_DebugDraw(state);
 		AR_SimpleSprite_Draw(sprite1);
+		AR_SimpleSprite_Draw(sprite2);
 
 
 		glFlush();

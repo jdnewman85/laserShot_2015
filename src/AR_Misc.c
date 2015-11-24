@@ -80,3 +80,46 @@ kmVec2* AR_CreateQuad() {
 	return this;
 }
 
+GLuint AR_LoadShaderProgram(char* filename) {
+	char tempFilename[1024];
+	strcpy(tempFilename, filename);
+	strcat(tempFilename, ".vert");
+	GLchar* vertSource = AR_LoadStringFromFile(tempFilename);
+
+	strcpy(tempFilename, filename);
+	strcat(tempFilename, ".frag");
+	GLchar* fragSource = AR_LoadStringFromFile(tempFilename);
+
+	GLuint vertShader;
+	vertShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertShader, 1, (const GLchar**)&vertSource, 0);
+	glCompileShader(vertShader);
+	AR_CheckGL();
+
+	AR_PrintShaderLog(vertShader);
+
+	GLuint fragShader;
+	fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragShader, 1, (const GLchar**)&fragSource, 0);
+	glCompileShader(fragShader);
+	AR_CheckGL();
+
+	AR_PrintShaderLog(fragShader);
+
+	GLuint program;
+	program = glCreateProgram();
+	glAttachShader(program, vertShader);
+	glAttachShader(program, fragShader);
+	glLinkProgram(program);
+	AR_CheckGL();
+	
+	//Check for proper linking
+	GLint isLinked;
+	glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
+	AR_PrintProgramLog(program);
+	assert(isLinked == GL_TRUE);
+	AR_CheckGL();
+
+	return program;
+}
+
