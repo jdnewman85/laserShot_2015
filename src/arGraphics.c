@@ -3,14 +3,16 @@
 
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
-
 #include <bcm_host.h>
+#include <kazmath/kazmath.h> //Opt in Grpahics.h
 
 #include "arMisc.h" //Opt in Graphics.h
 
 #define GLES_VERSION 2
 
 EGL_DISPMANX_WINDOW_T nativewindow; //IMPORTANT! Must be static or global
+
+kmMat4 arProjectionMatrix;
 
 void arGraphics(arGlState *state) {
 //Arguments: CUBE_STATE_T *state - holds OGLES model info
@@ -99,7 +101,6 @@ void arGraphics(arGlState *state) {
 	nativewindow.width = state->screen_width;
 	nativewindow.height = state->screen_height;
 	vc_dispmanx_update_submit_sync(dispman_update);
-	   
 	arAssertGl();
 	
 	state->surface = eglCreateWindowSurface(state->display, config, &nativewindow, NULL);
@@ -123,6 +124,9 @@ void arGraphics(arGlState *state) {
 	// Framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	arAssertGl();
+
+	//Setup Projection Matrix
+	kmMat4OrthographicProjection(&arProjectionMatrix, 0.0f, state->screen_width, 0.0f, state->screen_height, -1.0f, 1.0f);
 
 	state->context = context; //OPT REmove state->context?
 }

@@ -6,6 +6,7 @@
 #include "arVao.h"
 #include "arMisc.h"
 #include "arSimpleSprite.h"
+#include "arGraphics.h"
 
 //OPT COULD MAYBE MAKE THIS WHOLE THING INTO A CLASS IT'S OWN
 //USE MAP FOR ATTRIBUTES?
@@ -15,7 +16,7 @@ static arVao* Vao;
 static GLuint VertexBuffer; //OPT Better variable names?
 static GLuint TextureCoordBuffer;
 
-static kmVec2* TextureCoordData; //TODO Does this really need to be global?
+static kmVec2* TextureCoordData; //TODO Do these really need to be global? Also, maybe Stack?
 
 void arSimpleSpriteInit() {
 	//TODO Return errors (Since files could be missing, and assert won't be in release build)
@@ -33,7 +34,7 @@ void arSimpleSpriteInit() {
 	//--Find //OPT Would be nice to use layout, or Bind before linking
 	GLint vertPosAttribLoc;
 	vertPosAttribLoc = glGetAttribLocation(ShaderProgram, "vertPos");
-	assert(vertPosAttribLoc >= 0);
+	assert(vertPosAttribLoc != -1);
 	//--Set
 	arVao_SetAttribute(Vao, VertexBuffer, vertPosAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, /*(GLvoid*)offsetof(arVec2, x)*/ 0);
 
@@ -42,7 +43,7 @@ void arSimpleSpriteInit() {
 	//--Find
 	GLint vertTexCoordAttribLoc;
 	vertTexCoordAttribLoc = glGetAttribLocation(ShaderProgram, "vertTexCoord");
-	assert(vertTexCoordAttribLoc >= 0);
+	assert(vertTexCoordAttribLoc != -1);
 	//--Set
 	arVao_SetAttribute(Vao, TextureCoordBuffer, vertTexCoordAttribLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -55,6 +56,20 @@ void arSimpleSpriteInit() {
 	
 	glBindBuffer(GL_ARRAY_BUFFER, TextureCoordBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(kmVec2)*4, TextureCoordData, GL_STATIC_DRAW);
+
+	//Orthogonal Projection
+	GLint projectionMatrixLoc;
+	projectionMatrixLoc = glGetUniformLocation(ShaderProgram, "projectionMatrix");
+	assert(projectionMatrixLoc != -1);
+	/*
+	printf("arProjectionMatrix:\n");
+	printf("%f\t%f\t%f\t%f\n", arProjectionMatrix.mat[0], arProjectionMatrix.mat[4], arProjectionMatrix.mat[ 8], arProjectionMatrix.mat[12]);
+	printf("%f\t%f\t%f\t%f\n", arProjectionMatrix.mat[1], arProjectionMatrix.mat[5], arProjectionMatrix.mat[ 9], arProjectionMatrix.mat[13]);
+	printf("%f\t%f\t%f\t%f\n", arProjectionMatrix.mat[2], arProjectionMatrix.mat[6], arProjectionMatrix.mat[10], arProjectionMatrix.mat[14]);
+	printf("%f\t%f\t%f\t%f\n", arProjectionMatrix.mat[3], arProjectionMatrix.mat[7], arProjectionMatrix.mat[11], arProjectionMatrix.mat[15]);
+	printf("ProjectionTransformLocation: %d\n", projectionMatrixLoc);
+	*/
+	glUniformMatrix4fv(projectionMatrixLoc, 1, GL_FALSE, (GLfloat*)&arProjectionMatrix);
 }
 
 arSimpleSprite* arCreateSimpleSprite() {
@@ -87,6 +102,17 @@ void arSimpleSprite_UpdateQuad(arSimpleSprite* this) {
 	kmVec2Fill(&quad[1], right, bottom); //BR
 	kmVec2Fill(&quad[2], right,    top); //TR
 	kmVec2Fill(&quad[3],  left,    top); //TL
+
+
+	//IDEA OPT TODO May move the transform stuffs to it's own class...
+	//TODO OPT Need to store either the transformation matrix, or the final quad and only update if dirty
+	//ALRIGHT, need to do some matrix mathy transformationy stuffsy
+	//Order of transformations:
+	//Position/Size
+	//Offset
+	//Rotation
+	//Scale
+	
 }
 
 void arSimpleSprite_Draw(arSimpleSprite* this) {

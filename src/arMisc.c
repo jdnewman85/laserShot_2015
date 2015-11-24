@@ -120,6 +120,9 @@ GLuint arLoadShaderProgram(char* filename) {
 	assert(isLinked == GL_TRUE);
 	arAssertGl();
 
+	//Need this for glUniform
+	glUseProgram(program);
+
 	return program;
 }
 

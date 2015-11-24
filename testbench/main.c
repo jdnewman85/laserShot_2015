@@ -8,7 +8,7 @@
 static arGlState _state, *state=&_state;
 
 int main(int argNum, char** args) {
-	printf("Number of arguements: %d\n", argNum);
+	printf("Number of arguments: %d\n", argNum);
 	for(int i = 0; i < argNum; i++) {
 		printf("Arg %d: %s\n", i, args[i]);
 	}
@@ -17,16 +17,22 @@ int main(int argNum, char** args) {
 
 	arGraphics(state); //TODO Add the inits to arGraphics
 	arSimpleSpriteInit();
+	arAssertGl();
 
 	//kazmath test
-	kmVec3 testVector;
-	kmMat4 testMatrix;
-	kmMat4RotationZ(&testMatrix, kmPI/2.0f);
-	testVector.x = 10.0f;
-	testVector.y = 1.111f;
-	printf("testVector: (x%f, y%f, z%f)\n", testVector.x, testVector.y, testVector.z);
-	kmVec3Transform(&testVector, &testVector, &testMatrix);
-	printf("testVector: (x%f, y%f, z%f)\n", testVector.x, testVector.y, testVector.z);
+	kmVec2 point;
+	kmMat3 transform;
+	kmMat3 temp;
+
+	kmVec2Fill(&point, 2.0f, 5.0f);
+	kmMat3FromTranslation(&transform, -4.0f, -10.0f);
+	kmMat3FromRotationZ(&temp, kmPI/2.0f);
+	kmMat3MultiplyMat3(&transform, &temp, &transform);
+	kmMat3FromScaling(&temp, 2.0f, 1.0f);
+	kmMat3MultiplyMat3(&transform, &temp, &transform);
+
+	kmVec2Transform(&point, &point, &transform);
+	printf("Point{X: %f, Y: %f}\n", point.x, point.y);
 
 	//Test load a png
 	arTexture* myTexture;
@@ -41,10 +47,10 @@ int main(int argNum, char** args) {
 	//Make Some Sprites
 	arSimpleSprite* sprite1;
 	sprite1 = arCreateSimpleSprite();
-	sprite1->position.x = 0.0f;
-	sprite1->position.y = 0.0f;
-	sprite1->size.x = 0.5f;
-	sprite1->size.y = 0.5f;
+	sprite1->position.x = 100.0f;
+	sprite1->position.y = 100.0f;
+	sprite1->size.x = 100.0f;
+	sprite1->size.y = 100.0f;
 	arSimpleSprite_UpdateQuad(sprite1);
 
 	arSimpleSprite* sprite2;
