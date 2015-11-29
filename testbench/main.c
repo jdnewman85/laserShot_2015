@@ -50,20 +50,19 @@ int main(int argNum, char** args) {
 	printf("Images, bitches\n");
 
 	//TEMP TEXTURE SHIT
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, myTexture->textureId);
 	arAssertGl();
 
 	//Make Some Sprites
 	arSimpleSprite* sprite1;
-	sprite1 = arCreateSimpleSprite();
+	sprite1 = arCreateSimpleSprite(myTexture);
 	kmVec2Fill(&(sprite1->position), 100.0f, 100.0f);
-	kmVec2Fill(&(sprite1->size), 100.0f, 100.0f);
 	arSimpleSprite_UpdateModel(sprite1);
 
 	arSimpleSprite* sprite2;
-	sprite2 = arCreateSimpleSprite();
+	sprite2 = arCreateSimpleSprite(myTexture);
 	kmVec2Fill(&(sprite2->position), state->displayWidth/2 - 250, state->displayHeight/2 - 250);
-	kmVec2Fill(&(sprite2->size), 500.0f, 500.0f);
 	arSimpleSprite_UpdateModel(sprite2);
 
 	for(;;) {

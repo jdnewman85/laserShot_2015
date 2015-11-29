@@ -64,14 +64,14 @@ void arSimpleSpriteInit(arGlState* state) {
 	glUniformMatrix4fv(projectionMatrixLoc, 1, GL_FALSE, (GLfloat*)&(state->projectionMatrix));
 }
 
-arSimpleSprite* arCreateSimpleSprite() {
+arSimpleSprite* arCreateSimpleSprite(arTexture* texture) {
 	arSimpleSprite* this;
 	this = (arSimpleSprite*)malloc(sizeof(arSimpleSprite));
 
 	kmVec2Fill(&(this->position), -1.0f, -1.0f);
-	kmVec2Fill(&(this->size), 2.0f, 2.0f);
 
 	this->model = arCreateQuad();
+	this->texture = texture;
 
 	arSimpleSprite_UpdateModel(this);
 
@@ -84,9 +84,9 @@ void arSimpleSprite_UpdateModel(arSimpleSprite* this) {
 	kmScalar left, bottom, right, top;
 	left = this->position.x;
 	bottom = this->position.y;
-	right = left + this->size.x;
-	top = bottom + this->size.y;
-	
+	right = left + (kmScalar)(this->texture->width);
+	top = bottom + (kmScalar)(this->texture->height);
+
 	kmVec2* model;
 	model = this->model;
 
@@ -109,6 +109,13 @@ void arSimpleSprite_UpdateModel(arSimpleSprite* this) {
 void arSimpleSprite_Draw(arSimpleSprite* this) {
 	glUseProgram(ShaderProgram); //TODO OPT Change to use shader object later?
 	arVao_Bind(Vao);
+
+	//Textures
+	//TODO OPT Avoid redundant calls here, and possibly create a BindTexture method for arTexture*
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, this->texture->textureId);
+	
+	//Uniforms
 
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer); //TODO Maybe somehow allow this to be done in the Vao_Bind()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(kmVec2)*4, this->model, GL_DYNAMIC_DRAW);

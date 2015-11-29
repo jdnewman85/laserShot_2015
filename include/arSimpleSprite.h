@@ -6,15 +6,16 @@
 typedef struct {
 	kmVec2	position;
 //	kmVec2 offset;
-	kmVec2	size;
+//	kmVec2	size;
 //	kmVec2	scale;
 //	kmVec2	color;
 //	kmScalar rotation;
 	kmVec2* model;
+	arTexture* texture;
 } arSimpleSprite;
 
 void arSimpleSpriteInit(arGlState* state);
-arSimpleSprite* arCreateSimpleSprite();
+arSimpleSprite* arCreateSimpleSprite(arTexture* texture);
 void arSimpleSprite_UpdateModel(arSimpleSprite* this);
 void arSimpleSprite_Draw(arSimpleSprite* this);
 
