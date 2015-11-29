@@ -5,6 +5,8 @@
 
 #include <GLES2/gl2.h>
 
+#include "arMisc.h"
+
 typedef struct {
 	bool enabled;
 	GLuint bufferId;
@@ -17,7 +19,7 @@ typedef struct {
 } arVertexAttribute;
 
 typedef struct {
-	arVertexAttribute attributes[GL_MAX_VERTEX_ATTRIBS];
+	arVertexAttribute attributes[AR_MAX_VERTEX_ATTRIBS];
 } arVao;
 
 

@@ -49,11 +49,6 @@ int main(int argNum, char** args) {
 	arAssertGl();
 	printf("Images, bitches\n");
 
-	//TEMP TEXTURE SHIT
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, myTexture->textureId);
-	arAssertGl();
-
 	//Make Some Sprites
 	arSimpleSprite* sprite1;
 	sprite1 = arCreateSimpleSprite(myTexture);
@@ -67,9 +62,11 @@ int main(int argNum, char** args) {
 
 	for(;;) {
 		arCls();
+		arAssertGl();
 
 		arSimpleSprite_Draw(sprite1);
 		arSimpleSprite_Draw(sprite2);
+		arAssertGl();
 
 		glFlush();
 		glFinish();

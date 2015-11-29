@@ -21,6 +21,7 @@ typedef struct {
 	kmMat4 projectionMatrix;
 } arGlState;
 
+#define AR_MAX_VERTEX_ATTRIBS 8 //TODO Add an asser check for this =< glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &n) at runtime
 #define arAssertGl() assert(glGetError() == 0);
 
 void arPrintShaderLog(GLint shader);

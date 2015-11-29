@@ -3,6 +3,7 @@
 
 #include <GLES2/gl2.h> //OPT Already in arVao.h
 
+#include "arMisc.h" //OPT Already in arVao.h
 #include "arVao.h"
 
 //TODO Kind of need a better way to bind buffer, and update data
@@ -12,7 +13,7 @@ arVao* arCreateVao() {
 	arVao* newVao;
 	newVao = (arVao*)malloc(sizeof(arVao));
 
-	for(int i = 0; i < GL_MAX_VERTEX_ATTRIBS; i++) {
+	for(int i = 0; i < AR_MAX_VERTEX_ATTRIBS; i++) {
 		newVao->attributes[i].enabled = false;
 		newVao->attributes[i].bufferId = -1; //To cause an error if not set //BUG TODO Doesn't actually cause an error
 		newVao->attributes[i].index = -1; //To cause an error if not set //BUG Unsure if this actually causes an error
@@ -44,20 +45,26 @@ void arVao_SetAttribute(arVao* vao, GLuint bufferId, GLuint index, GLint size,
 void arVao_Bind(arVao* vao) {
 	//OPT Store vao->attributes pointer to prevent so many dereferences?
 	if(vao == NULL) {
-		for(int i = 0; i < GL_MAX_VERTEX_ATTRIBS; i++) {
+		for(int i = 0; i < AR_MAX_VERTEX_ATTRIBS; i++) {
 			glDisableVertexAttribArray(i);
+			arAssertGl();
 		}
 		glBindBuffer(GL_ARRAY_BUFFER, 0); //OPT Needed?
+		arAssertGl();
 	} else {
-		for(int i = 0; i < GL_MAX_VERTEX_ATTRIBS; i++) {
+		for(int i = 0; i < AR_MAX_VERTEX_ATTRIBS; i++) {
 			if(vao->attributes[i].enabled) {
 				glEnableVertexAttribArray(i);
+				arAssertGl();
 				glBindBuffer(GL_ARRAY_BUFFER, vao->attributes[i].bufferId);
+				arAssertGl();
 				glVertexAttribPointer(vao->attributes[i].index, vao->attributes[i].size,
 						vao->attributes[i].type, vao->attributes[i].normalized,
 						vao->attributes[i].stride, vao->attributes[i].pointer);
+				arAssertGl();
 			} else {
 				glDisableVertexAttribArray(i);
+				arAssertGl();
 			}
 		}
 	}

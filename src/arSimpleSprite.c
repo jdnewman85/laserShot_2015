@@ -108,22 +108,27 @@ void arSimpleSprite_UpdateModel(arSimpleSprite* this) {
 
 void arSimpleSprite_Draw(arSimpleSprite* this) {
 	glUseProgram(ShaderProgram); //TODO OPT Change to use shader object later?
+	arAssertGl();
 	arVao_Bind(Vao);
+	arAssertGl();
 
 	//Textures
 	//TODO OPT Avoid redundant calls here, and possibly create a BindTexture method for arTexture*
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texture->textureId);
+	arAssertGl();
 	
 	//Uniforms
 
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer); //TODO Maybe somehow allow this to be done in the Vao_Bind()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(kmVec2)*4, this->model, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	arAssertGl();
 
 	//OPT Need?, debug only?
 	arVao_Bind(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glUseProgram(0);
+	arAssertGl();
 }
 
