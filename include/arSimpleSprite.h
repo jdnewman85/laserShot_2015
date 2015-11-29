@@ -10,12 +10,12 @@ typedef struct {
 //	kmVec2	scale;
 //	kmVec2	color;
 //	kmScalar rotation;
-	kmVec2* quad;
+	kmVec2* model;
 } arSimpleSprite;
 
 void arSimpleSpriteInit(arGlState* state);
 arSimpleSprite* arCreateSimpleSprite();
-void arSimpleSprite_UpdateQuad(arSimpleSprite* this);
+void arSimpleSprite_UpdateModel(arSimpleSprite* this);
 void arSimpleSprite_Draw(arSimpleSprite* this);
 
 #endif //__arSIMPLESPRITE_H__

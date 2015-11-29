@@ -71,14 +71,14 @@ arSimpleSprite* arCreateSimpleSprite() {
 	kmVec2Fill(&(this->position), -1.0f, -1.0f);
 	kmVec2Fill(&(this->size), 2.0f, 2.0f);
 
-	this->quad = arCreateQuad();
+	this->model = arCreateQuad();
 
-	arSimpleSprite_UpdateQuad(this);
+	arSimpleSprite_UpdateModel(this);
 
 	return this;
 }
 
-void arSimpleSprite_UpdateQuad(arSimpleSprite* this) {
+void arSimpleSprite_UpdateModel(arSimpleSprite* this) {
 	//Calculate quad from sprite data
 	
 	kmScalar left, bottom, right, top;
@@ -87,13 +87,13 @@ void arSimpleSprite_UpdateQuad(arSimpleSprite* this) {
 	right = left + this->size.x;
 	top = bottom + this->size.y;
 	
-	kmVec2* quad;
-	quad = this->quad;
+	kmVec2* model;
+	model = this->model;
 
-	kmVec2Fill(&quad[0],  left, bottom); //BL
-	kmVec2Fill(&quad[1], right, bottom); //BR
-	kmVec2Fill(&quad[2], right,    top); //TR
-	kmVec2Fill(&quad[3],  left,    top); //TL
+	kmVec2Fill(&model[0],  left, bottom); //BL
+	kmVec2Fill(&model[1], right, bottom); //BR
+	kmVec2Fill(&model[2], right,    top); //TR
+	kmVec2Fill(&model[3],  left,    top); //TL
 
 	//IDEA OPT TODO May move the transform stuffs to it's own class...
 	//TODO OPT Need to store either the transformation matrix, or the final quad and only update if dirty
@@ -111,7 +111,7 @@ void arSimpleSprite_Draw(arSimpleSprite* this) {
 	arVao_Bind(Vao);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer); //TODO Maybe somehow allow this to be done in the Vao_Bind()
-	glBufferData(GL_ARRAY_BUFFER, sizeof(kmVec2)*4, this->quad, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(kmVec2)*4, this->model, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 	//OPT Need?, debug only?

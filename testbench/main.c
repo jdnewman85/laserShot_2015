@@ -58,13 +58,13 @@ int main(int argNum, char** args) {
 	sprite1 = arCreateSimpleSprite();
 	kmVec2Fill(&(sprite1->position), 100.0f, 100.0f);
 	kmVec2Fill(&(sprite1->size), 100.0f, 100.0f);
-	arSimpleSprite_UpdateQuad(sprite1);
+	arSimpleSprite_UpdateModel(sprite1);
 
 	arSimpleSprite* sprite2;
 	sprite2 = arCreateSimpleSprite();
 	kmVec2Fill(&(sprite2->position), state->displayWidth/2 - 250, state->displayHeight/2 - 250);
 	kmVec2Fill(&(sprite2->size), 500.0f, 500.0f);
-	arSimpleSprite_UpdateQuad(sprite2);
+	arSimpleSprite_UpdateModel(sprite2);
 
 	for(;;) {
 		arCls();
