@@ -13,8 +13,6 @@
 EGL_DISPMANX_WINDOW_T nativewindow; //IMPORTANT! Must be static or global
 
 void arGraphics(arGlState *state) {
-//Arguments: CUBE_STATE_T *state - holds OGLES model info
-//Description: Sets the display, OpenGL|ES context and screen stuff
 //TODO Rewrite bits to have variables closer to use
 	int32_t success = 0;
 	EGLBoolean result;

@@ -1,3 +1,11 @@
+
+//Still need to have textures and uniforms bound with a drawable
+//Note, not all uniforms need to be updated every object
+
+
+
+
+
 #include <stdio.h>
 
 #include <GLES2/gl2.h>
@@ -48,18 +56,14 @@ int main(int argNum, char** args) {
 	//Make Some Sprites
 	arSimpleSprite* sprite1;
 	sprite1 = arCreateSimpleSprite();
-	sprite1->position.x = 100.0f;
-	sprite1->position.y = 100.0f;
-	sprite1->size.x = 100.0f;
-	sprite1->size.y = 100.0f;
+	kmVec2Fill(&(sprite1->position), 100.0f, 100.0f);
+	kmVec2Fill(&(sprite1->size), 100.0f, 100.0f);
 	arSimpleSprite_UpdateQuad(sprite1);
 
 	arSimpleSprite* sprite2;
 	sprite2 = arCreateSimpleSprite();
-	sprite2->position.x = state->displayWidth/2 - 250;
-	sprite2->position.y = state->displayHeight/2 - 250;
-	sprite2->size.x = 500;
-	sprite2->size.y = 500;
+	kmVec2Fill(&(sprite2->position), state->displayWidth/2 - 250, state->displayHeight/2 - 250);
+	kmVec2Fill(&(sprite2->size), 500.0f, 500.0f);
 	arSimpleSprite_UpdateQuad(sprite2);
 
 	for(;;) {
