@@ -15,12 +15,7 @@
 
 static arGlState _state, *state=&_state;
 
-int main(int argNum, char** args) {
-	printf("Number of arguments: %d\n", argNum);
-	for(int i = 0; i < argNum; i++) {
-		printf("Arg %d: %s\n", i, args[i]);
-	}
-
+int main() {
 	printf("initGL\n");
 
 	//TODO Maybe arGraphics returns the state?
@@ -28,26 +23,10 @@ int main(int argNum, char** args) {
 	arSimpleSpriteInit(state);
 	arAssertGl();
 
-	//kazmath test
-	kmVec2 point;
-	kmMat3 transform;
-	kmMat3 temp;
-
-	kmVec2Fill(&point, 2.0f, 5.0f);
-	kmMat3FromTranslation(&transform, -4.0f, -10.0f);
-	kmMat3FromRotationZ(&temp, kmPI/2.0f);
-	kmMat3MultiplyMat3(&transform, &temp, &transform);
-	kmMat3FromScaling(&temp, 2.0f, 1.0f);
-	kmMat3MultiplyMat3(&transform, &temp, &transform);
-
-	kmVec2Transform(&point, &point, &transform);
-	printf("Point{X: %f, Y: %f}\n", point.x, point.y);
-
 	//Test load a png
 	arTexture* myTexture;
 	myTexture = arLoadTexture("./img/test.png");
 	arAssertGl();
-	printf("Images, bitches\n");
 
 	//Make Some Sprites
 	arSimpleSprite* sprite1;
