@@ -1,11 +1,11 @@
 #ifndef __arVAO_H__
 #define __arVAO_H__
 
-#include <stdbool.h>
+#include <stdbool.h> //bool
 
-#include <GLES2/gl2.h>
+#include <GLES2/gl2.h> //GL*
 
-#include "arMisc.h"
+#include "arMisc.h" //AR_MAX_VERTEX_ATTRIBS
 
 typedef struct {
 	bool enabled;

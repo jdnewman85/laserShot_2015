@@ -1,6 +1,10 @@
 #ifndef __arTEXTURE_H__
 #define __arTEXTURE_H__
 
+#include <stdint.h> //uint*
+
+#include <GLES2/gl2.h> //GL*
+
 typedef struct {
 	 //OPT 16bit width and height?
 	uint32_t width, height;

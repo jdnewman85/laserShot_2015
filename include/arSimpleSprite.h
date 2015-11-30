@@ -1,7 +1,10 @@
 #ifndef __arSIMPLESPRITE_H__
 #define __arSIMPLESPRITE_H__
 
-#include <GLES2/gl2.h>
+#include <kazmath/kazmath.h> //km*
+
+#include "arGraphics.h" //arGlState
+#include "arTexture.h" //arTexture
 
 typedef struct {
 	kmVec2	position;

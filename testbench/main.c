@@ -4,14 +4,15 @@
 
 
 
-
-
-#include <stdio.h>
-
-#include <GLES2/gl2.h>
-#include <kazmath/kazmath.h>
-
 #include "../include/argon.h"
+
+
+
+#include <stdio.h> //printf
+
+#include <kazmath/kazmath.h> //km*
+
+
 
 static arGlState _state, *state=&_state;
 
@@ -47,8 +48,6 @@ int main() {
 		arSimpleSprite_Draw(sprite2);
 		arAssertGl();
 
-		glFlush();
-		glFinish();
 		arFlip(state);
 	}
        

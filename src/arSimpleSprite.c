@@ -1,12 +1,14 @@
-#include <assert.h>
-#include <stdlib.h>
-
-#include <GLES2/gl2.h> //OPT Already in arSimpleSprite.h
-
-#include "arVao.h"
-#include "arMisc.h"
 #include "arSimpleSprite.h"
-#include "arGraphics.h"
+
+#include <assert.h> //assert
+#include <stdlib.h> //malloc free
+
+#include <GLES2/gl2.h> //gl* GL* //OPT Already in arSimpleSprite.h
+#include <kazmath/kazmath.h> //km* //OPT Already in arSimpleSprite.h
+
+#include "arVao.h" //arVao*
+#include "arMisc.h" //arLoadShaderProgram arCreateQuad
+#include "arGraphics.h" //arGlState
 
 //OPT COULD MAYBE MAKE THIS WHOLE THING INTO A CLASS IT'S OWN
 //USE MAP FOR ATTRIBUTES?

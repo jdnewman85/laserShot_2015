@@ -1,10 +1,11 @@
-#include <stdlib.h>
-#include <stdbool.h> //OPT Already in arVao.h
-
-#include <GLES2/gl2.h> //OPT Already in arVao.h
-
-#include "arMisc.h" //OPT Already in arVao.h
 #include "arVao.h"
+
+#include <stdlib.h> //malloc free NULL
+#include <stdbool.h> //bool //OPT Already in arVao.h
+
+#include <GLES2/gl2.h> //gl* GL* //OPT Already in arVao.h
+
+#include "arMisc.h" //arAssertGl //OPT Already in arVao.h
 
 //TODO Kind of need a better way to bind buffer, and update data
 

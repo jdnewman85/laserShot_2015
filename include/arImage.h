@@ -1,7 +1,7 @@
 #ifndef __arIMAGE_H__
 #define __arIMAGE_H__
 
-#include <stdint.h>
+#include <stdint.h> //uint*
 
 typedef struct {
 	 //OPT 16bit width and height?

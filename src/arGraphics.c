@@ -1,14 +1,17 @@
 //TODO Could I make a setActive(arGLState*) type function?
 
-#include <assert.h>
-#include <stdio.h>
+#include "arGraphics.h" //OPT, not needed (no data types declared)
 
-#include <EGL/egl.h>
+#include <assert.h> //assert
+#include <stdio.h> //NULL printf stderr
+
+#include <EGL/egl.h> //egl* //OPT in Grpahics.h
 #include <EGL/eglext.h>
-#include <bcm_host.h>
-#include <kazmath/kazmath.h> //Opt in Grpahics.h
+#include <GLES2/gl2.h> //gl* //GL*
+#include <bcm_host.h> //bcm*
+#include <kazmath/kazmath.h> //km* //OPT in Grpahics.h
 
-#include "arMisc.h" //Opt in Graphics.h
+#include "arMisc.h" //arAssertGl
 
 #define GLES_VERSION 2
 

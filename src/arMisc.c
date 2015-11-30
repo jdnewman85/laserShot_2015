@@ -1,14 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <GLES2/gl2.h>
-#include <kazmath/kazmath.h> //OPT Already included with arMisc.h
-
 #include "arMisc.h"
 
+#include <stdio.h> //printf fprintf stderr NULL FILE SEEK*
+#include <stdlib.h> //malloc free
+#include <stdint.h> //uint*
+#include <string.h> //str*
 
-//Simple Opengl stuffs
-//#define arAssertGl() = assert(glGetError() == 0)
+#include <GLES2/gl2.h> //gl* GL*
+#include <kazmath/kazmath.h> //km* //OPT Already included with arMisc.h
 
 void arPrintShaderLog(GLint shader) {
    // Prints the compile log for a shader

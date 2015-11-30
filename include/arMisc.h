@@ -1,25 +1,10 @@
 #ifndef __arMISC_H__
 #define __arMISC_H__
 
-#include <assert.h>
+#include <assert.h> //assert (in macro)
 
-#include <EGL/egl.h>
-#include <GLES2/gl2.h>
-#include <kazmath/kazmath.h>
-
-#include "arImage.h"
-#include "arTexture.h"
-
-typedef struct {
-	uint32_t displayWidth, displayHeight;
-
-	// OpenGL|ES objects
-	EGLDisplay display;
-	EGLSurface surface;
-	EGLContext context;
-	
-	kmMat4 projectionMatrix;
-} arGlState;
+#include <GLES2/gl2.h> //GL*
+#include <kazmath/kazmath.h> //km*
 
 #define AR_MAX_VERTEX_ATTRIBS 8 //TODO Add an asser check for this =< glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &n) at runtime
 #define arAssertGl() assert(glGetError() == 0);

@@ -1,11 +1,10 @@
-#include <stdlib.h>
-
-#include <GLES2/gl2.h> //OPT Already in Texture.h
-
-#include "../lib/lodepng.h"
-
-#include "arImage.h"
 #include "arTexture.h"
+
+#include <stdlib.h> //malloc free
+
+#include <GLES2/gl2.h> //gl* GL* //OPT Already in Texture.h
+
+#include "arImage.h" //arImage*
 
 arTexture* arLoadTexture(char* filename) {
 	arImage* tempImage;
