@@ -1,3 +1,5 @@
+//TODO Could I make a setActive(arGLState*) type function?
+
 #include <assert.h>
 #include <stdio.h>
 
