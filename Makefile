@@ -16,7 +16,8 @@ TARGET = piGL
 SOURCES = $(shell echo src/*.c) $(shell echo lib/*.c)
 COMMON = #Usefull if I make a common head or something
 HEADERS = $(shell echo include/*.h)
-OBJECTS = $(SOURCES:.c=.o)
+BUILD_DIR = build
+OBJECTS = $(addprefix ${BUILD_DIR}/,$(patsubst %.c,%.o,$(SOURCES)))
 TESTBENCH = $(shell echo testbench/*.c)
 LIBTARGET = lib$(TARGET).a
 
@@ -45,7 +46,7 @@ profile: CFLAGS += -pg
 profile: $(TARGET)
 
 clean:
-	-rm -f $(OBJECTS)
+	-rm -rf $(BUILD_DIR)
 	-rm -f gmon.out
 
 distclean: clean
@@ -53,38 +54,10 @@ distclean: clean
 	-rm -f $(LIBTARGET)
 
 #If not using GNU make or to be safe
-%.o: %.c $(HEADERS) $(COMMON)
+$(BUILD_DIR)/%.o: %.c $(HEADERS) $(COMMON)
+	@mkdir -p `dirname $@`
 	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -c -o $@ $< $(INCDIRS)
 
 .PHONY : all profile release clean distclean \
 	install install-strip uninstall
-
-
-
-
-
-
-
-
-#Not using this yet
-
-#PREFIX = $(DESTDIR)/usr/local
-#BINDIR = $(PREFIX)/bin
-
-#install: release
-#	install -D $(TARGET) $(BINDIR)/$(TARGET)
-#
-#install-strip: release
-#	install -D -s $(TARGET) $(BINDIR)/$(TARGET)
-#
-#uninstall:
-#	-rm $(BINDIR)/$(TARGET)
-
-#Doesn't work!!!
-#Special GNU Make, check header files that matter
-#.SECONDEXPANSION:
-#
-#$(foreach OBJ,$(OBJECTS),$(eval $(OBJ)_DEPS = $(shell gcc -MM $(OBJ:.o=.c) | sed s/.*://)))
-#%.o: %.c $$($$@_DEPS)
-#	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -c -o $@ $< $(INCDIRS)
 
