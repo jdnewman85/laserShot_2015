@@ -4,10 +4,10 @@ SHELL = /bin/sh
 CC = gcc
 
 FLAGS = -fgnu89-inline #-std=gnu99 
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -fPIC
 DEBUGFLAGS = -O0 -D _DEBUG -ggdb3
 RELEASEFLAGS = -O2 -D NDEBUG #-combine -fwhole-program
-LDFLAGS += -L$(SDKSTAGE)/opt/vc/lib/
+LDFLAGS += -L$(SDKSTAGE)/opt/vc/lib/ -L$(HOME)/laser
 LIBS += -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lm -lkazmath
 
 INCDIRS += -I$(SDKSTAGE)/opt/vc/include/ -I$(SDKSTAGE)/opt/vc/include/interface/vcos/pthreads -I$(SDKSTAGE)/opt/vc/include/interface/vmcs_host/linux -I./include
@@ -23,10 +23,10 @@ LIBTARGET = lib$(TARGET).a
 
 GO_C = go
 CGO_FLAGS = $(FLAGS) $(INCDIRS)
-CGO_LDFLAGS = $(LDFLAGS) $(LIBS)
+CGO_LDFLAGS = $(LDFLAGS) $(LIBS) -lpiGL
 GO_LDFLAGS = -linkmode external -extldflags -static
 GO_TARGET = piGL
-GO_SOURCES = $(shell echo src/*.go)
+GO_SOURCES = $(shell echo testbench/*.go)
 
 all: $(TARGET)
 
@@ -40,7 +40,8 @@ static: $(OBJECTS)
 	ar -rcs $(LIBTARGET) $(OBJECTS)
 
 go-static: $(GO_SOURCES) static
-	CGO_CFLAGS="$(CGO_FLAGS)" CGO_LDFLAGS="$(CGO_LDFLAGS)" $(GO_C) build -o $(GO_TARGET) -ldflags "$(GO_LDFLAGS) $(CGO_LDFLAGS)" $(GO_SOURCES)
+	CGO_CFLAGS="$(CGO_FLAGS)" CGO_LDFLAGS="$(CGO_LDFLAGS)" $(GO_C) build -o $(GO_TARGET).out $(GO_SOURCES)
+	#CGO_CFLAGS="$(CGO_FLAGS)" CGO_LDFLAGS="$(CGO_LDFLAGS)" $(GO_C) build -o $(GO_TARGET) -ldflags "$(GO_LDFLAGS) $(CGO_LDFLAGS)" $(GO_SOURCES)
 
 profile: CFLAGS += -pg
 profile: $(TARGET)

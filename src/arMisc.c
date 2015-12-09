@@ -8,6 +8,10 @@
 #include <GLES2/gl2.h> //gl* GL*
 #include <kazmath/kazmath.h> //km* //OPT Already included with arMisc.h
 
+void PrintSomeNum(int someNum) {
+	printf("SomeNum: %d\n", someNum);
+}
+
 void arPrintShaderLog(GLint shader) {
    // Prints the compile log for a shader
    char log[1024]; //BUG Check actual size

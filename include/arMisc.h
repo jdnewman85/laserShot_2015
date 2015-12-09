@@ -9,6 +9,7 @@
 #define AR_MAX_VERTEX_ATTRIBS 8 //TODO Add an asser check for this =< glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &n) at runtime
 #define arAssertGl() assert(glGetError() == 0);
 
+void PrintSomeNum(int someNum);
 void arPrintShaderLog(GLint shader);
 void arPrintProgramLog(GLint shader);
 char* arLoadStringFromFile(char* filename);
